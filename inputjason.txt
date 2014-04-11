@@ -1,0 +1,7 @@
+word
+41
+value
+2.33
+;comment
+;12
+cool

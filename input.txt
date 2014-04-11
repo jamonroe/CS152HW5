@@ -1,3 +1,2 @@
 (define deriv
   (lambda (poly var)))
-  
