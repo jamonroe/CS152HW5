@@ -6,22 +6,23 @@ import frontend.jason.Source;
 
 public class NumberToken extends Token {
 
-	private String value;
+	private Double value;
 	
 	public NumberToken(Source src) throws IOException {
-		value = "";
+		String result = "";
 		// consume digits
 		do {
-			value += src.next();
+			result += src.next();
 		} while (digit(src.peek()));
 		// consume decimal
 		if (src.peek() == '.') 
 		{
 			// consume digits
 			do {
-				value += src.next();
+				result += src.next();
 			} while (digit(src.peek()));
 		}
+		value = Double.parseDouble(result);
 	}
 
 	private boolean digit(char c) {
@@ -31,6 +32,14 @@ public class NumberToken extends Token {
 	
 	@Override
 	public Object getValue() {
-		return Double.parseDouble(value);
+		return value;
+	}
+	
+	public String toString() {
+		return super.toString() + value;
+	}
+	
+	public TokenType getType() {
+		return TokenType.Number;
 	}
 }

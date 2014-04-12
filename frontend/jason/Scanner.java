@@ -2,7 +2,10 @@ package frontend.jason;
 
 import java.io.IOException;
 
+import frontend.token.jason.BooleanToken;
+import frontend.token.jason.CharacterToken;
 import frontend.token.jason.NumberToken;
+import frontend.token.jason.SpecialToken;
 import frontend.token.jason.StringToken;
 import frontend.token.jason.Token;
 import frontend.token.jason.WordToken;
@@ -17,22 +20,42 @@ public class Scanner {
 	
 	public Token next() throws IOException {
 		skipWhitespace();
+		// Word Token
 		if (isCharacter(src.peek())) 
 		{
 			return new WordToken(src);
 		}
+		// Number Token
 		if (isDigit(src.peek()))
 		{
 			return new NumberToken(src);
 		}
-		/*
-		if (string(src.peek()))
+		// String Token
+		if (src.peek() == '\"')
 		{
 			return new StringToken(src);
 		}
-		if (src.peek() == '#') {
-			
-		}*/
+		if (src.peek() == '#') 
+		{
+			// Consume #
+			src.next();
+			// Character Token
+			if (src.peek() == '\\')
+			{
+				// Consume \
+				src.next();
+				return new CharacterToken(src);
+			}
+			if (src.peek() == 't' || 
+				src.peek() == 'f' ||
+				src.peek() == 'T' ||
+				src.peek() == 'F')
+			{
+				return new BooleanToken(src);
+			}
+		}
+		if (src.peek() != 65535)
+			return new SpecialToken(src);
 		return null;
 	}
 	

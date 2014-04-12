@@ -7,12 +7,21 @@ import frontend.jason.Source;
 public class WordToken extends Token {
 
 	private String value;
+	private TokenType type;
 	
 	public WordToken(Source src) throws IOException {
 		value = "";
 		do {
 			value += src.next();
 		} while (valid(src.peek()));
+		
+		// Is this a keyword?
+		try {
+			Keyword.valueOf(value.toUpperCase());
+			type = TokenType.Keyword;
+		} catch (IllegalArgumentException e) {
+			type = TokenType.Identifier;
+		}
 	}
 
 	private boolean valid(char c) {
@@ -26,6 +35,16 @@ public class WordToken extends Token {
 	
 	@Override
 	public Object getValue() {
+		if (type == TokenType.Keyword)
+			return Keyword.valueOf(value.toUpperCase());
 		return value;
+	}
+	
+	public String toString() {
+		return super.toString() + value;
+	}
+	
+	public TokenType getType() {
+		return type;
 	}
 }

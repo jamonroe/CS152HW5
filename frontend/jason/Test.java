@@ -13,7 +13,6 @@ public class Test {
 		Scanner scan = new Scanner(new Source(new FileInputStream(new File("inputjason.txt"))));
 		Token token;
 		while ((token = scan.next()) != null)
-			System.out.println(token);
+			System.out.println(token + " == " + token.getValue());
 	}
-	
 }
