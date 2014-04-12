@@ -41,7 +41,7 @@ public class WordToken extends Token {
 	}
 	
 	public String toString() {
-		return super.toString() + value;
+		return value;
 	}
 	
 	public TokenType getType() {

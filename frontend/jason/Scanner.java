@@ -13,8 +13,10 @@ import frontend.token.jason.WordToken;
 public class Scanner {
 
 	private Source src;
+	private int line;
 	
 	public Scanner(Source src) {
+		line = 1;
 		this.src = src;
 	}
 	
@@ -23,17 +25,17 @@ public class Scanner {
 		// Word Token
 		if (isCharacter(src.peek())) 
 		{
-			return new WordToken(src);
+			return new WordToken(src).setLine(line);
 		}
 		// Number Token
 		if (isDigit(src.peek()))
 		{
-			return new NumberToken(src);
+			return new NumberToken(src).setLine(line);
 		}
 		// String Token
 		if (src.peek() == '\"')
 		{
-			return new StringToken(src);
+			return new StringToken(src).setLine(line);
 		}
 		if (src.peek() == '#') 
 		{
@@ -44,18 +46,18 @@ public class Scanner {
 			{
 				// Consume \
 				src.next();
-				return new CharacterToken(src);
+				return new CharacterToken(src).setLine(line);
 			}
 			if (src.peek() == 't' || 
 				src.peek() == 'f' ||
 				src.peek() == 'T' ||
 				src.peek() == 'F')
 			{
-				return new BooleanToken(src);
+				return new BooleanToken(src).setLine(line);
 			}
 		}
 		if (src.peek() != 65535)
-			return new SpecialToken(src);
+			return new SpecialToken(src).setLine(line);
 		return null;
 	}
 	
@@ -76,6 +78,8 @@ public class Scanner {
 			  src.peek() == '\r' ||
 			  src.peek() == '\n') 
 		{
+			if (src.peek() == '\n')
+				line++;
 			src.next();
 		}
 		// skip comments
@@ -84,8 +88,13 @@ public class Scanner {
 			{
 				// do nothing until newline
 			}
+			line++;
 			// skip any additional whitespace
 			skipWhitespace();
 		}
+	}
+	
+	public int getLine() {
+		return line;
 	}
 }

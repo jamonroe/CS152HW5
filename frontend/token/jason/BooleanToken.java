@@ -26,9 +26,9 @@ public class BooleanToken extends Token {
 
 	public String toString() {
 		if (value) {
-			return super.toString() + "#t";
+			return "#t";
 		}
-		return super.toString() + "#f";
+		return "#f";
 	}
 	
 	public TokenType getType() {

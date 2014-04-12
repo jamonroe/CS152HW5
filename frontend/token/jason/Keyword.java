@@ -12,5 +12,6 @@ public enum Keyword {
 	LETREC,
 	NOT,
 	OR,
-	QUOTE
+	QUOTE,
+	CONS
 }
