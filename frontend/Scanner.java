@@ -1,68 +1,100 @@
 package frontend;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StreamTokenizer;
-import java.io.FileInputStream;
+
+import frontend.token.BooleanToken;
+import frontend.token.CharacterToken;
+import frontend.token.NumberToken;
+import frontend.token.SpecialToken;
+import frontend.token.StringToken;
+import frontend.token.Token;
+import frontend.token.WordToken;
 
 public class Scanner {
 
-	public static void main(String[] args) {
-
-		InputStreamReader reader = null;
-
-		try {
-			reader = new InputStreamReader(new FileInputStream("input.txt"));
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found.");
-			e.printStackTrace();
+	private Source src;
+	private int line;
+	
+	public Scanner(Source src) {
+		line = 1;
+		this.src = src;
+	}
+	
+	public Token next() throws IOException {
+		skipWhitespace();
+		// Word Token
+		if (isCharacter(src.peek())) 
+		{
+			return new WordToken(src).setLine(line);
 		}
-
-		StreamTokenizer tokens = new StreamTokenizer(reader);
-		tokens.commentChar(';');
-		tokens.eolIsSignificant(true);
-
-		int current;
-		String line = "";
-		
-		try {
-			while ((current = tokens.nextToken()) != StreamTokenizer.TT_EOF) {
-				
-				// Returns the next word
-				if (current == StreamTokenizer.TT_WORD){
-					System.out.println(tokens.sval + "\t:Keyword");
-					line += tokens.sval + " ";
-					// TODO check if valid keyword/identifier
-				}
-				
-				// Returns the next number
-				else if (current == StreamTokenizer.TT_NUMBER){
-					System.out.println(tokens.nval + "\t:Number");
-					line += tokens.nval + " ";
-				}
-				
-				// Returns the next string literal
-				else if (current == '"'){
-					System.out.println(tokens.sval + "\t:String Literal");
-					line += tokens.sval + " ";
-				}
-				
-				// If end of line, print the line
-				else if (current == StreamTokenizer.TT_EOL){
-					System.out.println("Line: " + line + "\n");
-					line = " ";
-				}
-
-				// If anything else, it's counted as a special character
-				else{
-					System.out.println((char) current + "\t:Special Symbol");
-					line += (char) current;
-				}
+		// Number Token
+		if (isDigit(src.peek()))
+		{
+			return new NumberToken(src).setLine(line);
+		}
+		// String Token
+		if (src.peek() == '\"')
+		{
+			return new StringToken(src).setLine(line);
+		}
+		if (src.peek() == '#') 
+		{
+			// Consume #
+			src.next();
+			// Character Token
+			if (src.peek() == '\\')
+			{
+				// Consume \
+				src.next();
+				return new CharacterToken(src).setLine(line);
 			}
-		} catch (IOException e) {
-			System.out.println("IO Exception");
-			e.printStackTrace();
+			if (src.peek() == 't' || 
+				src.peek() == 'f' ||
+				src.peek() == 'T' ||
+				src.peek() == 'F')
+			{
+				return new BooleanToken(src).setLine(line);
+			}
 		}
+		if (src.peek() != 65535)
+			return new SpecialToken(src).setLine(line);
+		return null;
+	}
+	
+	public boolean isCharacter(char current) {
+		if (current >= 'a' && current <= 'z') return true;
+		if (current >= 'A' && current <= 'A') return true;
+		return false;
+	}
+	
+	public boolean isDigit(char current) {
+		if (current >= '0' && current <= '9') return true;
+		return false;
+	}
+	
+	public void skipWhitespace() throws IOException {
+		// skip spaces, carriage returns, and newlines
+		while(src.peek() == ' '  ||
+			  src.peek() == '\r' ||
+			  src.peek() == '\n') 
+		{
+			if (src.peek() == '\n')
+				line++;
+			src.next();
+		}
+		// skip comments
+		if (src.peek() == ';') {
+			while(src.next() != '\n') 
+			{
+				// do nothing until newline
+			}
+			line++;
+			// skip any additional whitespace
+			skipWhitespace();
+		}
+	}
+	
+	public int getLine() {
+		return line;
 	}
 }

@@ -1,4 +1,4 @@
-package frontend.jason;
+package frontend;
 
 import java.io.IOException;
 import java.io.InputStream;

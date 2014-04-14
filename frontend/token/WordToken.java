@@ -1,8 +1,8 @@
-package frontend.token.jason;
+package frontend.token;
 
 import java.io.IOException;
 
-import frontend.jason.Source;
+import frontend.Source;
 
 public class WordToken extends Token {
 
