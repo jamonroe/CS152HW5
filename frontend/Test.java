@@ -16,8 +16,9 @@ public class Test {
             String src = "temp.txt";	
             Scanner scan = new Scanner(new Source(new FileInputStream(new File(src))));
             Parser parser = new Parser(scan);
-            parser.parse().print();
-            
+            Node node;
+            while ((node = parser.parse()) != null)
+            ;
 //            /*
 //            ( ( a b ) c )
 //            

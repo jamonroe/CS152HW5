@@ -86,7 +86,8 @@ public class Scanner {
 		if (src.peek() == ';') {
 			while(src.next() != '\n') 
 			{
-				// do nothing until newline
+				if (src.peek() == 65535)
+					return;
 			}
 			line++;
 			// skip any additional whitespace
