@@ -12,8 +12,8 @@ public class Parser {
     String src;
     Scanner scan;
 
-    public Parser(Scanner _scan) throws IOException {
-        scan = _scan;
+    public Parser(Scanner scan) throws IOException {
+        this.scan = scan;
     }
 
     public Node parse() throws IOException {
@@ -22,7 +22,7 @@ public class Parser {
 
         if (token.getValue() == SpecialSymbol.LPAREN) {
             RootNode = new Node(token);
-            parseList(scan, RootNode);
+            parseList(scan, RootNode, true);
         } else {
             return null;
         }
@@ -30,26 +30,24 @@ public class Parser {
         return RootNode;
     }
 
-    private Node parseList(Scanner scan, Node root) throws IOException {
+    private Node parseList(Scanner scan, Node root, boolean real) throws IOException {
         
-        Token tempT;
         Node car = new Node(scan.next()); 
        
         // LEFT CHILD
-        if (car.getToken().toString().equals(LPAREN)) {
-            parseList(scan, car);
+        if (car.getToken().getValue() == LPAREN) {
+            root.setLeftChild(parseList(scan, car, true));
         } else {
             root.setLeftChild(car);
         }
         
-        
         // RIGHT CHILD
-        if (scan.sPeek() == ')') {
-            return root;
+        if (scan.peek() == ')') {
+        	if (real) {
+        		scan.next();
+        	}
         } else {
-            
-            SpecialToken sToken = new SpecialToken("(");
-            parseList(scan, new Node(sToken));
+            root.setRightChild(parseList(scan, new Node(new SpecialToken("(")), false));
         }
         return root;
     }

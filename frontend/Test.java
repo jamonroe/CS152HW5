@@ -13,32 +13,36 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-            String src = "input.txt";	
+            String src = "temp.txt";	
             Scanner scan = new Scanner(new Source(new FileInputStream(new File(src))));
-            /*
-            Root
-
-			L: (
-			LL: a
-			LR: (
-			LRL: b
-			
-			R: (
-			RL: c
-			
-			((a b) c)
-			*/
+            Parser parser = new Parser(scan);
+            parser.parse().print();
             
-            Node head = new Node(new SpecialToken("("));
-            Node L = head.setLeftChild(new Node(new SpecialToken("(")));
-            Node LL = L.setLeftChild(new Node(new SpecialToken("a")));
-            Node LR = L.setRightChild(new Node(new SpecialToken("(")));
-            Node LRL = LR.setLeftChild(new Node(new SpecialToken("b")));
-
-            Node R = head.setRightChild(new Node(new SpecialToken("(")));
-            Node RL = R.setLeftChild(new Node(new SpecialToken("c")));
-            
-            head.print();
+//            /*
+//            ( ( a b ) c )
+//            
+//            Root: (
+//
+//			L: (
+//			LL: a
+//			LR: (
+//			LRL: b
+//			
+//			R: (
+//			RL: c
+//			
+//			*/
+//            
+//            Node head = new Node(new SpecialToken("("));
+//            Node L = head.setLeftChild(new Node(new SpecialToken("(")));
+//            Node LL = L.setLeftChild(new Node(new SpecialToken("a")));
+//            Node LR = L.setRightChild(new Node(new SpecialToken("(")));
+//            Node LRL = LR.setLeftChild(new Node(new SpecialToken("b")));
+//
+//            Node R = head.setRightChild(new Node(new SpecialToken("(")));
+//            Node RL = R.setLeftChild(new Node(new SpecialToken("c")));
+//            
+//            head.print();
 	}
 }
 //

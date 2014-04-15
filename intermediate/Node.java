@@ -56,8 +56,8 @@ public class Node { // Very very basic node class.
             if (getRightChild() != null) 
             {
                 getRightChild().printRight();
-            } else if (getRightChild() == null && getTokenValue().equals("(")) {
-                System.out.print(")");
+            } else if (getTokenValue().equals("(")) {
+                System.out.print(") ");
             }
         }
         
@@ -74,7 +74,7 @@ public class Node { // Very very basic node class.
             if (getRightChild() != null) 
             {
                 getRightChild().printRight();
-            } else if (getRightChild() == null && getTokenValue().equals("(")) {
+            } else if (getTokenValue().equals("(")) {
                 System.out.print(") ");
             }
         }

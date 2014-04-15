@@ -98,7 +98,7 @@ public class Scanner {
 		return line;
 	}
         
-        public char sPeek() {
-            return src.peek();
-        }
+    public char peek() {
+        return src.peek();
+    }
 }
