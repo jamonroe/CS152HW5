@@ -1,4 +1,4 @@
-package frontend.token;
+package frontend.token.jason;
 
 public enum SpecialSymbol {
 	EQ ("="),

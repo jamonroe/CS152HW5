@@ -1,14 +1,14 @@
-package frontend;
+package frontend.jason;
 
 import java.io.IOException;
 
-import frontend.token.BooleanToken;
-import frontend.token.CharacterToken;
-import frontend.token.NumberToken;
-import frontend.token.SpecialToken;
-import frontend.token.StringToken;
-import frontend.token.Token;
-import frontend.token.WordToken;
+import frontend.token.jason.BooleanToken;
+import frontend.token.jason.CharacterToken;
+import frontend.token.jason.NumberToken;
+import frontend.token.jason.SpecialToken;
+import frontend.token.jason.StringToken;
+import frontend.token.jason.Token;
+import frontend.token.jason.WordToken;
 
 public class Scanner {
 
@@ -97,4 +97,8 @@ public class Scanner {
 	public int getLine() {
 		return line;
 	}
+        
+        public char sPeek() {
+            return src.peek();
+        }
 }

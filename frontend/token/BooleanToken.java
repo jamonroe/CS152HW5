@@ -1,8 +1,8 @@
-package frontend.token;
+package frontend.token.jason;
 
 import java.io.IOException;
 
-import frontend.Source;
+import frontend.jason.Source;
 
 public class BooleanToken extends Token {
 
