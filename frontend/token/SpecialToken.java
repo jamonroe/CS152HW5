@@ -1,8 +1,8 @@
-package frontend.token.jason;
+package frontend.token;
 
 import java.io.IOException;
 
-import frontend.jason.Source;
+import frontend.Source;
 
 public class SpecialToken extends Token {
 
@@ -17,9 +17,9 @@ public class SpecialToken extends Token {
 		symbol = SpecialSymbol.get(next);
 	}
         
-        public SpecialToken (char inChar) throws IOException {
-		value = inChar + "";
-		symbol = SpecialSymbol.get(inChar + "");
+        public SpecialToken (String string) throws IOException {
+		value = string;
+		symbol = SpecialSymbol.get(string);
 	}
 	
 	@Override

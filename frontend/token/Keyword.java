@@ -1,4 +1,4 @@
-package frontend.token.jason;
+package frontend.token;
 
 public enum Keyword {
 	AND,

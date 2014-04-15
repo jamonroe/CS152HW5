@@ -1,8 +1,9 @@
-package frontend.jason;
+package frontend;
 
-import frontend.jason.Parser.Node;
+import frontend.token.SpecialToken;
+import frontend.token.Token;
+import intermediate.Node;
 
-import frontend.token.jason.Token;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,23 +15,30 @@ public class Test {
             
             String src = "input.txt";	
             Scanner scan = new Scanner(new Source(new FileInputStream(new File(src))));
+            /*
+            Root
+
+			L: (
+			LL: a
+			LR: (
+			LRL: b
+			
+			R: (
+			RL: c
+			
+			((a b) c)
+			*/
             
-            Node[] nodeArray = new Node[3];
-            Parser parser = new Parser(scan);
-            Node temp;
+            Node head = new Node(new SpecialToken("("));
+            Node L = head.setLeftChild(new Node(new SpecialToken("(")));
+            Node LL = L.setLeftChild(new Node(new SpecialToken("a")));
+            Node LR = L.setRightChild(new Node(new SpecialToken("(")));
+            Node LRL = LR.setLeftChild(new Node(new SpecialToken("b")));
+
+            Node R = head.setRightChild(new Node(new SpecialToken("(")));
+            Node RL = R.setLeftChild(new Node(new SpecialToken("c")));
             
-            int i = 0;
-            while((temp = parser.parse()) != null) 
-            {
-                nodeArray[i] = temp;
-                nodeArray[i].print(nodeArray[i]);
-                i++;
-            }
-            
-            
-            
-            
-            
+            head.print();
 	}
 }
 //
