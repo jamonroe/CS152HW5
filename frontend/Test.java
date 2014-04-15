@@ -13,12 +13,22 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-            String src = "temp.txt";	
-            Scanner scan = new Scanner(new Source(new FileInputStream(new File(src))));
-            Parser parser = new Parser(scan);
+            String src = "input.txt";
+            Source source = new Source(new FileInputStream(new File(src)));
+//            char a;
+//            while ((a = source.next()) != 65535) {
+//            	System.out.println(a + ": " + (int) a);
+//            }
+            source = new Source(new FileInputStream(new File(src)));
+            Scanner scan = new Scanner(source);	
+            
             Node node;
-            while ((node = parser.parse()) != null)
-            ;
+            Parser parser = new Parser(scan);
+//            parser.parse().print();
+            while ((node = parser.parse()) != null) {
+            	node.print();
+            	System.out.println();
+            }
 //            /*
 //            ( ( a b ) c )
 //            
