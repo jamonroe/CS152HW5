@@ -100,6 +100,11 @@ public class Scanner {
 	}
         
     public char peek() {
+    	try {
+    		skipWhitespace();
+    	} catch (IOException e) {
+    		
+    	}
         return src.peek();
     }
 }

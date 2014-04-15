@@ -36,46 +36,57 @@ public class Node { // Very very basic node class.
             return this.rchild;
         }
         
-        public void print() {
-        	printLeft();
+        public String print() {
+        	return printLeft(0);
         }
         
-        public void printLeft() {
+        public String printLeft(int line) {
             // Preorder Traversal: Root, Left, Right
-            
+            String result = "";
             // Root
-            System.out.print(getTokenValue() + " ");
+            if (getToken().getLine() != line) {
+            	line = getToken().getLine();
+            	result += "\n" + line + ": ";
+            }
+        	result += token.toString() + " ";
             
             // Left, if not null.
             if (getLeftChild() != null) 
             {
-                getLeftChild().printLeft(); 
+                result += getLeftChild().printLeft(line); 
             }
             
             // Right, if not null.
             if (getRightChild() != null) 
             {
-                getRightChild().printRight();
+                result += getRightChild().printRight(line);
             } else if (getTokenValue().equals("(")) {
-                System.out.print(") ");
+                result += ") ";
             }
+            return result;
         }
         
-        public void printRight() {
+        public String printRight(int line) {
         	// Preorder Traversal: Root, Left, Right
-            
+        	String result = "";
+        	
             // Left, if not null.
             if (getLeftChild() != null) 
             {
-                getLeftChild().printLeft(); 
+                result += getLeftChild().printLeft(line); 
             }
             
             // Right, if not null.
             if (getRightChild() != null) 
             {
-                getRightChild().printRight();
+                result += getRightChild().printRight(line);
             } else if (getTokenValue().equals("(")) {
-                System.out.print(") ");
+                result += ") ";
             }
+            return result;
+        }
+        
+        public String toString() {
+        	return printLeft(0);
         }
     }

@@ -31,28 +31,33 @@ public class Parser {
         return head;
     }
 
-    private Node parseList(Node root, boolean real) throws IOException {
+    private void parseList(Node root, boolean real) throws IOException {
         Token temp;
-    	if((temp = scan.next()) == null) return null;
+    	if((temp = scan.next()) == null) return;
         Node car = new Node(temp); 
         // LEFT CHILD
         if (car.getToken().getValue() == LPAREN) {
-            root.setLeftChild(parseList(car, true));
+        	root.setLeftChild(car);
+            parseList(car, true);
         } else 
         if (car.getToken().getValue() == RPAREN) {
-        	return root;
+        	return;
         } else {
             root.setLeftChild(car);
         }
         
         // RIGHT CHILD
         if (scan.peek() != ')' && scan.peek() != 65535) {
-            root.setRightChild(parseList(new Node(new SpecialToken("(")), false));
+            Node virtual_list = new Node(new SpecialToken("("));
+            root.setRightChild(virtual_list);
+        	parseList(virtual_list, false);
         }
     	if (real) {
     		scan.next();
     	}
-
-    	return root;
+    }
+    
+    public String toString() {
+    	return head.print();
     }
 }
