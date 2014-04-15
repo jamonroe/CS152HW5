@@ -22,20 +22,18 @@ public class Parser {
         Token token = scan.next(); // LPAREN
         
         if (token != null && token.getValue() == SpecialSymbol.LPAREN) {
-            System.out.print(token);
             head = new Node(token);
             parseList(head, true);
         } else {
             return null;
         }
-        System.out.println();
         // Return root node for tree
         return head;
     }
 
     private Node parseList(Node root, boolean real) throws IOException {
         Token temp;
-    	System.out.print(temp = scan.next());
+    	if((temp = scan.next()) == null) return null;
         Node car = new Node(temp); 
         // LEFT CHILD
         if (car.getToken().getValue() == LPAREN) {
@@ -48,11 +46,11 @@ public class Parser {
         }
         
         // RIGHT CHILD
-        if (scan.peek() != ')') {
+        if (scan.peek() != ')' && scan.peek() != 65535) {
             root.setRightChild(parseList(new Node(new SpecialToken("(")), false));
         }
     	if (real) {
-    		System.out.print(scan.next());
+    		scan.next();
     	}
 
     	return root;
