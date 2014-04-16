@@ -10,14 +10,11 @@ public class SpecialToken extends Token {
 	private String value;
 	
 	public SpecialToken (Source src) throws IOException {
-		String next = "" + src.next();
-		if (src.peek() == '=')
-			next += src.next();
-		value = next;
-		symbol = SpecialSymbol.toEnum(next);
+		value = "" + src.next();
+		symbol = SpecialSymbol.toEnum(value);
 	}
         
-        public SpecialToken (String string) throws IOException {
+    public SpecialToken (String string) throws IOException {
 		value = string;
 		symbol = SpecialSymbol.toEnum(string);
 	}

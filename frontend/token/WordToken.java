@@ -16,27 +16,31 @@ public class WordToken extends Token {
 		} while (valid(src.peek()));
 		
 		// Is this a keyword?
-		try {
-			Keyword.valueOf(value.toUpperCase());
+		if (Keyword.toEnum(value) != null) {
 			type = TokenType.Keyword;
-		} catch (IllegalArgumentException e) {
+		} else {
 			type = TokenType.Identifier;
 		}
 	}
 
 	private boolean valid(char c) {
-		if (c >= 'a' && c <= 'z') return true;
-		if (c >= 'A' && c <= 'Z') return true;
-		if (c >= '0' && c <= '9') return true;
-		if (c == '-') return true;
-		if (c == '?') return true;
+		if (SpecialSymbol.toEnum("" + c) == null 
+		&&	c != ' '
+		&&  c != '\r'
+		&&  c != '\n')
+		{
+			// # is a special symbol
+			if (c == '#' && value.charAt(value.length() - 1) != '\\')
+				return false;
+			return true;
+		}
 		return false;
 	}
 	
 	@Override
 	public Object getValue() {
 		if (type == TokenType.Keyword)
-			return Keyword.valueOf(value.toUpperCase());
+			return Keyword.toEnum(value);
 		return value;
 	}
 	

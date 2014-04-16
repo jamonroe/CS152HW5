@@ -5,6 +5,7 @@ import java.io.IOException;
 import frontend.token.BooleanToken;
 import frontend.token.CharacterToken;
 import frontend.token.NumberToken;
+import frontend.token.SpecialSymbol;
 import frontend.token.SpecialToken;
 import frontend.token.StringToken;
 import frontend.token.Token;
@@ -22,49 +23,67 @@ public class Scanner {
 	
 	public Token next() throws IOException {
 		skipWhitespace();
-		// Word Token
-		if (isCharacter(src.peek())) 
-		{
-			return new WordToken(src).setLine(line);
-		}
-		// Number Token
-		if (isDigit(src.peek()))
-		{
-			return new NumberToken(src).setLine(line);
-		}
-		// String Token
-		if (src.peek() == '\"')
-		{
-			return new StringToken(src).setLine(line);
-		}
-		if (src.peek() == '#') 
+		char peek = src.peek();
+		Token result;
+		
+		// Character or Boolean
+		if (peek == '#') 
 		{
 			// Consume #
 			src.next();
+			peek = src.peek();
 			// Character Token
-			if (src.peek() == '\\')
+			if (peek == '\\')
 			{
 				// Consume \
 				src.next();
-				return new CharacterToken(src).setLine(line);
+				result = new CharacterToken(src).setLine(line);
+				System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+				return result;
 			}
-			if (src.peek() == 't' || 
-				src.peek() == 'f' ||
-				src.peek() == 'T' ||
-				src.peek() == 'F')
+			if (peek == 't' || 
+				peek == 'f' ||
+				peek == 'T' ||
+				peek == 'F')
 			{
-				return new BooleanToken(src).setLine(line);
+				result = new BooleanToken(src).setLine(line);
+				System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+				return result;
 			}
+		} else
+		
+		// Special Symbol
+		if (SpecialSymbol.toEnum("" + peek) != null) {
+			result = new SpecialToken(src).setLine(line);
+			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			return result;
+		} else
+		
+		// Number Token
+		if (isDigit(peek))
+		{
+			result = new NumberToken(src).setLine(line);
+			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			return result;
+		} else
+		
+		// String Token
+		if (peek == '\"')
+		{
+			result = new StringToken(src).setLine(line);
+			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			return result;
+		} else
+		
+		// Word Token
+		if (peek != 65535) {
+			result = new WordToken(src).setLine(line);
+			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			return result;
 		}
-		if (src.peek() != 65535)
-			return new SpecialToken(src).setLine(line);
+		
+		// End of file
 		return null;
-	}
-	
-	public boolean isCharacter(char current) {
-		if (current >= 'a' && current <= 'z') return true;
-		if (current >= 'A' && current <= 'A') return true;
-		return false;
 	}
 	
 	public boolean isDigit(char current) {
