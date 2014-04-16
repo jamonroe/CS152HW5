@@ -14,12 +14,12 @@ public class SpecialToken extends Token {
 		if (src.peek() == '=')
 			next += src.next();
 		value = next;
-		symbol = SpecialSymbol.get(next);
+		symbol = SpecialSymbol.toEnum(next);
 	}
         
         public SpecialToken (String string) throws IOException {
 		value = string;
-		symbol = SpecialSymbol.get(string);
+		symbol = SpecialSymbol.toEnum(string);
 	}
 	
 	@Override
