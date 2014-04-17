@@ -38,7 +38,7 @@ public class Scanner {
 				// Consume \
 				src.next();
 				result = new CharacterToken(src).setLine(line);
-				System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+				System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 				return result;
 			}
 			if (peek == 't' || 
@@ -47,7 +47,7 @@ public class Scanner {
 				peek == 'F')
 			{
 				result = new BooleanToken(src).setLine(line);
-				System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+				System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 				return result;
 			}
 		} else
@@ -55,7 +55,7 @@ public class Scanner {
 		// Special Symbol
 		if (SpecialSymbol.toEnum("" + peek) != null) {
 			result = new SpecialToken(src).setLine(line);
-			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 			return result;
 		} else
 		
@@ -63,7 +63,7 @@ public class Scanner {
 		if (isDigit(peek))
 		{
 			result = new NumberToken(src).setLine(line);
-			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 			return result;
 		} else
 		
@@ -71,14 +71,14 @@ public class Scanner {
 		if (peek == '\"')
 		{
 			result = new StringToken(src).setLine(line);
-			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 			return result;
 		} else
 		
 		// Word Token
 		if (peek != 65535) {
 			result = new WordToken(src).setLine(line);
-			System.out.println(String.format("%s: %s", result.getType(), result.toString()));
+			System.out.println(String.format("%-14s: %s", result.getType(), result.toString()));
 			return result;
 		}
 		
