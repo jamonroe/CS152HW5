@@ -1,21 +1,26 @@
 package frontend;
 
 import intermediate.Node;
+import intermediate.SymbolTable;
 import frontend.token.SpecialSymbol;
 import static frontend.token.SpecialSymbol.LPAREN;
 import static frontend.token.SpecialSymbol.RPAREN;
 import frontend.token.SpecialToken;
 import frontend.token.Token;
+import frontend.token.TokenType;
+
 import java.io.IOException;
 
 public class Parser {
 
-    String src;
+	SymbolTable symbolTable;
+	String src;
     Scanner scan;
     Node head;
 
     public Parser(Scanner scan) throws IOException {
         this.scan = scan;
+        symbolTable = new SymbolTable();
     }
 
     public Node parse() throws IOException {
@@ -35,6 +40,12 @@ public class Parser {
         Token temp;
     	if((temp = scan.next()) == null) return;
         Node car = new Node(temp); 
+        
+        // Add identifiers to symbol table
+        if ((car.getToken().getType() == TokenType.Identifier)){
+        	symbolTable.put(car.getToken(), null);        	
+        }
+        
         // LEFT CHILD
         if (car.getToken().getValue() == LPAREN) {
         	root.setLeftChild(car);

@@ -21,5 +21,7 @@ public class Test {
             while ((node = parser.parse()) != null) {
             	System.out.println(node.print());
             }
+            
+//            System.out.println(parser.getTable().toString());
 	}
 }
