@@ -61,7 +61,7 @@ public class Parser {
         
         // Add identifiers to symbol table
         if ((car.getToken().getType() == TokenType.Identifier)){
-        	symbolTable.put(car.getToken(), null);        	
+        	symbolTable.put(car.getTokenValue(), null);        	
         }
         
         // LEFT CHILD

@@ -3,17 +3,15 @@ package intermediate;
 import java.util.HashMap;
 import java.util.Set;
 
-import frontend.token.Token;
-
 public class SymbolTable {
 
-	private HashMap<Token, String> symbolTable;
+	private HashMap<String, String> symbolTable;
 	
 	/**
 	 * Constructs the symbol table using a hash map
 	 */
 	public SymbolTable(){
-		this.symbolTable = new HashMap<Token, String>();
+		this.symbolTable = new HashMap<String, String>();
 	}
 	
 	/**
@@ -21,7 +19,7 @@ public class SymbolTable {
 	  * @param token the identifier or operator
 	  * @param value the value of the token
 	 */
-	public void put(Token token, String value){
+	public void put(String token, String value){
 		symbolTable.put(token, value);
 	}
 	
@@ -29,15 +27,15 @@ public class SymbolTable {
 	  * Returns the current symbol table
 	  * @return a hash map containing the symbols
 	 */
-	public HashMap<Token, String> getSymbolTable(){
+	public HashMap<String, String> getSymbolTable(){
 		return symbolTable;
 	}
 	
 	public String toString() {
 		String result = "";
 //		symbolTable.
-		Set<Token> list = symbolTable.keySet();
-		for (Token t : list) {
+		Set<String> list = symbolTable.keySet();
+		for (String t : list) {
 			result += t + "\n";
 		}
 		return result;
