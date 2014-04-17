@@ -1,6 +1,7 @@
 package intermediate;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import frontend.token.Token;
 
@@ -32,4 +33,13 @@ public class SymbolTable {
 		return symbolTable;
 	}
 	
+	public String toString() {
+		String result = "";
+//		symbolTable.
+		Set<Token> list = symbolTable.keySet();
+		for (Token t : list) {
+			result += t + "\n";
+		}
+		return result;
+	}
 }

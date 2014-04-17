@@ -17,6 +17,8 @@ public class Parser {
 	String src;
     Scanner scan;
     Node head;
+    String currentLine;
+    int lineNumber;
 
     public Parser(Scanner scan) throws IOException {
         this.scan = scan;
@@ -27,8 +29,14 @@ public class Parser {
         Token token = scan.next(); // LPAREN
         
         if (token != null && token.getValue() == SpecialSymbol.LPAREN) {
-            head = new Node(token);
+        	lineNumber = token.getLine();
+            currentLine = String.format("%02d: ", lineNumber) + token.toString();
+    		// Print first parenthesis
+            System.out.println(String.format("%-14s: %s", token.getType(), token.toString()));
+        	head = new Node(token);
             parseList(head, true);
+            // Print final line
+            System.out.println(currentLine);
         } else {
             return null;
         }
@@ -40,6 +48,16 @@ public class Parser {
         Token temp;
     	if((temp = scan.next()) == null) return;
         Node car = new Node(temp); 
+
+        if (temp.getLine() != lineNumber) {
+        	System.out.println(currentLine + "\n");
+    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+        	lineNumber = temp.getLine();
+        	currentLine = String.format("%02d: ", lineNumber);
+        } else {
+    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+        }
+        currentLine += " " + temp.toString();
         
         // Add identifiers to symbol table
         if ((car.getToken().getType() == TokenType.Identifier)){
@@ -64,8 +82,21 @@ public class Parser {
         	parseList(virtual_list, false);
         }
     	if (real) {
-    		scan.next();
+    		temp = scan.next();
+    		if (temp.getLine() != lineNumber) {
+            	System.out.println(currentLine + "\n");
+        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+            	lineNumber = temp.getLine();
+            	currentLine = String.format("%02d: ", lineNumber);
+            } else {
+        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+            }
+            currentLine += " " + temp.toString();
     	}
+    }
+    
+    public SymbolTable getTable() {
+    	return symbolTable;
     }
     
     public String toString() {
