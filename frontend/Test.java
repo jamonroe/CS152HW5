@@ -11,7 +11,7 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-            String src = "input.txt";
+            String src = "input.lisp";
             Source source = new Source(new FileInputStream(new File(src)));
             source = new Source(new FileInputStream(new File(src)));
             Scanner scan = new Scanner(source);	
