@@ -77,6 +77,16 @@ public class Executor {
 					return new MultiplyExecutor(symtab).execute(node.getRightChild());
 				case DIVIDE:
 					return new DivideExecutor(symtab).execute(node.getRightChild());
+				case SYMBOL:
+					return new SymbolExecutor(symtab).execute(node.getRightChild());
+				case STRING:
+					return new StringExecutor(symtab).execute(node.getRightChild());
+				case BOOLEAN:
+					return new BooleanExecutor(symtab).execute(node.getRightChild());
+				case NULL:
+					return new NullExecutor(symtab).execute(node.getRightChild());
+				case CHAR:
+					return new CharExecutor(symtab).execute(node.getRightChild());
 				default:
 					return "PREDEFINED FAILED";
 				}
