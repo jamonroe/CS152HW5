@@ -26,6 +26,12 @@ public class Executor {
 				return new IfStatementExecutor(symtab).execute(node); // NOT THE CHILD
 			case DEFINE:
 				return new DefineExecutor(symtab).execute(node);
+			case COND:
+				return new CondExecutor(symtab).execute(node);
+			case LET:
+				return new LetExecutor(symtab).execute(node);
+			case NOT:
+				return new NotExecutor(symtab).execute(node);
 			default:
 				break;
 			}
