@@ -10,7 +10,6 @@ public enum SpecialSymbol {
 	RPAREN (")"),
 	LBRACKET ("["),
 	RBRACKET ("]"),
-	QUOTE ("\""),
 	COMMA (","),
 	APOSTROPHE ("'"),
 	TILDE ("`"),

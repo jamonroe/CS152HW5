@@ -6,7 +6,7 @@ import intermediate.SymbolTable;
 
 public class Executor {
 
-	private SymbolTable symtab;
+	protected SymbolTable symtab;
 	
 	public Executor(SymbolTable symtab) {
 		this.symtab = symtab;
@@ -14,6 +14,8 @@ public class Executor {
 	
 	public Object execute(Node node) {
 		
+		if (node.getLeftChild() == null)
+			return null;
 		Node child = node.getLeftChild();
 		
 		switch (child.getToken().getType()) {
@@ -21,16 +23,16 @@ public class Executor {
 		case Keyword:
 			switch ((Keyword)child.getToken().getValue()) {
 			case IF:
-				new IfStatementExecutor(symtab).execute(node); // NOT THE CHILD
-				break;
+				return new IfStatementExecutor(symtab).execute(node); // NOT THE CHILD
+			case DEFINE:
+				return new DefineExecutor(symtab).execute(node);
 			default:
 				break;
 			}
 			break;
 		
 		case Identifier:
-			symtab.getSymbolTable().get(child.getTokenValue()); // TODO Change this
-			break;
+			return symtab.get(child.getTokenValue().toString());
 		
 		// Simple cases
 		case Boolean:
@@ -43,7 +45,7 @@ public class Executor {
 			break;
 		
 		}
-		return null;
+		return "EXECUTOR FAILED";
 	}
 	
 }

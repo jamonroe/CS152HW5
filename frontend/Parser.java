@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Parser {
 
-	SymbolTable symbolTable;
+	SymbolTable symtab;
 	String src;
     Scanner scan;
     Node head;
@@ -22,7 +22,7 @@ public class Parser {
 
     public Parser(Scanner scan) throws IOException {
         this.scan = scan;
-        symbolTable = new SymbolTable();
+        symtab = new SymbolTable();
     }
 
     public Node parse() throws IOException {
@@ -61,7 +61,8 @@ public class Parser {
         
         // Add identifiers to symbol table
         if (car.getToken().getType() == TokenType.Identifier){
-        	symbolTable.put((String)car.getTokenValue(), null);        	
+        	if (symtab.get(car.getTokenValue().toString()) == null)
+        		symtab.put(car.getTokenValue().toString(), null);        	
         }
         
         // LEFT CHILD
@@ -96,10 +97,14 @@ public class Parser {
     }
     
     public SymbolTable getTable() {
-    	return symbolTable;
+    	return symtab;
     }
     
     public String toString() {
     	return head.print();
+    }
+    
+    public Node getRoot() {
+    	return head;
     }
 }

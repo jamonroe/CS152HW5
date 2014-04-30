@@ -51,7 +51,15 @@ public class Scanner {
 				return result;
 			}
 		} else
-		
+			
+		// String Token
+		if (peek == '\"')
+		{
+			result = new StringToken(src).setLine(line);
+			
+			return result;
+		} else
+				
 		// Special Symbol
 		if (SpecialSymbol.toEnum("" + peek) != null) {
 			result = new SpecialToken(src).setLine(line);
@@ -63,14 +71,6 @@ public class Scanner {
 		if (isDigit(peek))
 		{
 			result = new NumberToken(src).setLine(line);
-			
-			return result;
-		} else
-		
-		// String Token
-		if (peek == '\"')
-		{
-			result = new StringToken(src).setLine(line);
 			
 			return result;
 		} else
