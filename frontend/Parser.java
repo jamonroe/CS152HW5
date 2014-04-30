@@ -60,8 +60,8 @@ public class Parser {
         currentLine += " " + temp.toString();
         
         // Add identifiers to symbol table
-        if ((car.getToken().getType() == TokenType.Identifier)){
-        	symbolTable.put(car.getTokenValue(), null);        	
+        if (car.getToken().getType() == TokenType.Identifier){
+        	symbolTable.put((String)car.getTokenValue(), null);        	
         }
         
         // LEFT CHILD

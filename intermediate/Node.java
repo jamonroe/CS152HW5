@@ -16,8 +16,8 @@ public class Node { // Very very basic node class.
             return this.token;
         }
         
-        public String getTokenValue() {
-            return this.token.toString();
+        public Object getTokenValue() {
+            return this.token;
         }
 
         public Node setLeftChild(Node node) {

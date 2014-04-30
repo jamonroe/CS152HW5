@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class SymbolTable {
 
-	private HashMap<String, String> symbolTable;
+	private HashMap<String, Object> symbolTable;
 	
 	/**
 	 * Constructs the symbol table using a hash map
 	 */
 	public SymbolTable(){
-		this.symbolTable = new HashMap<String, String>();
+		this.symbolTable = new HashMap<String, Object>();
 	}
 	
 	/**
@@ -19,7 +19,7 @@ public class SymbolTable {
 	  * @param token the identifier or operator
 	  * @param value the value of the token
 	 */
-	public void put(String token, String value){
+	public void put(String token, Object value){
 		symbolTable.put(token, value);
 	}
 	
@@ -27,7 +27,7 @@ public class SymbolTable {
 	  * Returns the current symbol table
 	  * @return a hash map containing the symbols
 	 */
-	public HashMap<String, String> getSymbolTable(){
+	public HashMap<String, Object> getSymbolTable(){
 		return symbolTable;
 	}
 	
