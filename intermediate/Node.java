@@ -1,5 +1,6 @@
 package intermediate;
 
+import frontend.token.SpecialSymbol;
 import frontend.token.Token;
 
 public class Node { // Very very basic node class.
@@ -13,27 +14,27 @@ public class Node { // Very very basic node class.
         }
 
         public Token getToken() {
-            return this.token;
+            return token;
         }
         
         public Object getTokenValue() {
-            return this.token;
+            return token.getValue();
         }
 
         public Node setLeftChild(Node node) {
-            return this.lchild = node;
+            return lchild = node;
         }
 
         public Node getLeftChild() {
-            return this.lchild;
+            return lchild;
         }
 
         public Node setRightChild(Node node) {
-            return this.rchild = node;
+            return rchild = node;
         }
 
         public Node getRightChild() {
-            return this.rchild;
+            return rchild;
         }
         
         public String print() {
@@ -44,7 +45,7 @@ public class Node { // Very very basic node class.
             // Preorder Traversal: Root, Left, Right
             String result = "";
             // Root
-            if (getToken().getLine() != line) {
+            if (getToken().getLine() != line && line != -1) {
             	line = getToken().getLine();
             	result += "\n" + line + ": ";
             }
@@ -60,7 +61,7 @@ public class Node { // Very very basic node class.
             if (getRightChild() != null) 
             {
                 result += getRightChild().printRight(line);
-            } else if (getTokenValue().equals("(")) {
+            } else if (getTokenValue() == SpecialSymbol.LPAREN) {
                 result += ") ";
             }
             return result;
@@ -80,13 +81,14 @@ public class Node { // Very very basic node class.
             if (getRightChild() != null) 
             {
                 result += getRightChild().printRight(line);
-            } else if (getTokenValue().equals("(")) {
+            } else if (getTokenValue() == SpecialSymbol.LPAREN) {
                 result += ") ";
             }
             return result;
         }
         
         public String toString() {
-        	return printLeft(0);
+        	return printLeft(-1);
+        	//return printLeft(0);
         }
     }

@@ -1,6 +1,5 @@
 package backend;
 
-import frontend.token.Token;
 import intermediate.Node;
 import intermediate.SymbolTable;
 
@@ -12,14 +11,14 @@ public class IfStatementExecutor extends Executor {
 
 	public Object execute(Node node) {
 		// IF
-		Token bool = (Token) super.execute(node.getRightChild());
-		if ((Boolean) bool.getValue()) {
+		Boolean bool = (Boolean) super.execute(node);
+		if (bool) {
 			// THEN
-			return super.execute(node.getRightChild().getRightChild());
+			return super.execute(node.getRightChild());
 		} else {
 			// ELSE
-			if (node.getRightChild().getRightChild().getRightChild() != null) {
-				return super.execute(node.getRightChild().getRightChild().getRightChild());
+			if (node.getRightChild().getRightChild() != null) {
+				return super.execute(node.getRightChild().getRightChild());
 			}
 		}
 		

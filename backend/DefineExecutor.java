@@ -10,8 +10,8 @@ public class DefineExecutor extends Executor {
 	}
 
 	public Object execute(Node node) {
-		Node variable = node.getRightChild().getLeftChild();
-		Object value = super.execute(node.getRightChild().getRightChild());
+		Node variable = node.getLeftChild();
+		Object value = super.execute(node.getRightChild());
 		symtab.put(variable.getTokenValue().toString(), value);
 		return null;
 	}

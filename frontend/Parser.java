@@ -22,7 +22,7 @@ public class Parser {
 
     public Parser(Scanner scan) throws IOException {
         this.scan = scan;
-        symtab = new SymbolTable();
+        symtab = new SymbolTable().initPredefined();
     }
 
     public Node parse() throws IOException {

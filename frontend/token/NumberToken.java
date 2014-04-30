@@ -36,6 +36,9 @@ public class NumberToken extends Token {
 	}
 	
 	public String toString() {
+		if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
+		    return String.format("%.0f", value);
+		}
 		return "" + value;
 	}
 	

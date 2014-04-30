@@ -1,5 +1,3 @@
-import intermediate.SymbolTable;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,17 +17,16 @@ public class Main {
         Scanner scan = new Scanner(source);	
         Parser parser = new Parser(scan);
         
-        System.out.println("**** Scanner Results ****\n");
-
         Executor exe = new Executor(parser.getTable());
-        
+
+        System.out.println("**** Parser Results ****\n");
         while (parser.parse() != null) {
-        	System.out.println("\nExecution Results: ");
+        	System.out.println("\n**** Execution Results ****");
             System.out.println(exe.execute(parser.getRoot()));
         	System.out.println();
             System.out.println("**** Symbol Table Entries ****\n");
             System.out.println(parser.getTable().toString());
-        	System.out.println();
+            System.out.println("**** Parser Results ****\n");
         }
 	}
 }

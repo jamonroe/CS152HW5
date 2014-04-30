@@ -6,24 +6,29 @@ import frontend.Source;
 
 public class WordToken extends Token {
 
-	private String value;
+	private Object value;
 	private TokenType type;
 	
 	public WordToken(Source src) throws IOException {
-		value = "";
+		String value = "";
 		do {
 			value += src.next();
-		} while (valid(src.peek()));
+		} while (valid(value, src.peek()));
+
+		type = TokenType.Identifier;
 		
 		// Is this a keyword?
 		if (Keyword.toEnum(value) != null) {
 			type = TokenType.Keyword;
+			this.value = Keyword.toEnum(value);
+		} else if (Predefined.toEnum(value) != null){
+			this.value = Predefined.toEnum(value);
 		} else {
-			type = TokenType.Identifier;
+			this.value = value;
 		}
 	}
 
-	private boolean valid(char c) {
+	private boolean valid(String value, char c) {
 		if (SpecialSymbol.toEnum("" + c) == null 
 		&&	c != ' '
 		&&  c != '\r'
@@ -39,13 +44,11 @@ public class WordToken extends Token {
 	
 	@Override
 	public Object getValue() {
-		if (type == TokenType.Keyword)
-			return Keyword.toEnum(value);
 		return value;
 	}
 	
 	public String toString() {
-		return value;
+		return value.toString();
 	}
 	
 	public TokenType getType() {
