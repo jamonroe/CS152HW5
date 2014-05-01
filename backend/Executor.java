@@ -1,5 +1,6 @@
 package backend;
 
+import backend.keywords.ListOpExecutor;
 import backend.keywords.QuoteExecutor;
 import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
@@ -51,6 +52,8 @@ public class Executor {
 			case QUOTE:
 				return new QuoteExecutor(symtab).execute(node.getRightChild());
 			default:
+				if (((Keyword)child.getTokenValue()).listOp())
+					return new ListOpExecutor(symtab).execute(node); // Exception: need the operator
 				return "KEYWORD FAILED";
 			}
 		
