@@ -11,7 +11,9 @@ public class NotExecutor extends Executor{
 
 	public Object execute(Node node) {
 		
-		return null;
+		// TODO add complexity when have equals
+		
+		return !(Boolean) super.execute(node);
 	}
 
 }

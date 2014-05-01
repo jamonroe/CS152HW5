@@ -1,5 +1,8 @@
 package frontend.token;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * + - * /
  * null?
@@ -20,7 +23,7 @@ public enum Predefined {
 	MULTIPLY ("*"),
 	DIVIDE ("/"),
 	NULL ("null?"),
-	EQUAL ("equal?"),
+	EQUAL ("="),
 	PAIR ("pair?"),
 	INTEGER ("integer?"),
 	SYMBOL ("symbol?"),
@@ -30,9 +33,14 @@ public enum Predefined {
 	STRING ("string?");
 	
 	private String value;
+	private List<String> values;
 	
 	Predefined(String value) {
 		this.value = value;
+	}
+	
+	Predefined(String ...values) {
+		this.values = Arrays.asList(values);
 	}
 	
 	public String toString() {

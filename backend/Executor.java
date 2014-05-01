@@ -5,6 +5,7 @@ import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
 import backend.predefined.CharExecutor;
 import backend.predefined.DivideExecutor;
+import backend.predefined.EqualExecutor;
 import backend.predefined.IntegerExecutor;
 import backend.predefined.MultiplyExecutor;
 import backend.predefined.NullExecutor;
@@ -105,6 +106,8 @@ public class Executor {
 					return new IntegerExecutor(symtab).execute(node.getRightChild());
 				case REAL:
 					return new RealExecutor(symtab).execute(node.getRightChild());
+				case EQUAL:
+					return new EqualExecutor(symtab).execute(node.getRightChild());
 			
 				default:
 					return "PREDEFINED FAILED";
