@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-        String src = "not.lisp";
+        String src = "cond.lisp";
         Source source = new Source(new FileInputStream(new File(src)));
         Scanner scan = new Scanner(source);	
         Parser parser = new Parser(scan);
@@ -26,9 +26,9 @@ public class Main {
         	System.out.println("\n**** Execution Results ****");
             System.out.println(exe.execute(parser.getRoot()));
         	System.out.println();
-            System.out.println("**** Symbol Table Entries ****\n");
-            System.out.println(parser.getTable().toString());
-            System.out.println("**** Parser Results ****\n");
+//            System.out.println("**** Symbol Table Entries ****\n");
+//            System.out.println(parser.getTable().toString());
+//            System.out.println("**** Parser Results ****\n");
 		
         }
 	}
