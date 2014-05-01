@@ -1,11 +1,11 @@
 package backend;
 
+import backend.keywords.ListOpExecutor;
 import backend.keywords.QuoteExecutor;
 import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
 import backend.predefined.CharExecutor;
 import backend.predefined.DivideExecutor;
-import backend.predefined.EqualExecutor;
 import backend.predefined.IntegerExecutor;
 import backend.predefined.MultiplyExecutor;
 import backend.predefined.NullExecutor;
@@ -13,6 +13,7 @@ import backend.predefined.RealExecutor;
 import backend.predefined.StringExecutor;
 import backend.predefined.SubtractExecutor;
 import backend.predefined.SymbolExecutor;
+import backend.predefined.EqualExecutor;
 import frontend.token.Keyword;
 import frontend.token.Predefined;
 import frontend.token.SpecialSymbol;
@@ -52,6 +53,8 @@ public class Executor {
 			case QUOTE:
 				return new QuoteExecutor(symtab).execute(node.getRightChild());
 			default:
+				if (((Keyword)child.getTokenValue()).listOp())
+					return new ListOpExecutor(symtab).execute(node); // Exception: need the operator
 				return "KEYWORD FAILED";
 			}
 		

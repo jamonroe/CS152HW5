@@ -1,11 +1,12 @@
-package backend;
+package backend.keywords;
 
+import backend.Executor;
 import intermediate.Node;
 import intermediate.SymbolTable;
 
-public class LetExecutor extends Executor {
+public class CondExecutor extends Executor{
 
-	public LetExecutor(SymbolTable symtab) {
+	public CondExecutor(SymbolTable symtab) {
 		super(symtab);
 	}
 

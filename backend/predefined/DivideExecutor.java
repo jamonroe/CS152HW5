@@ -12,8 +12,14 @@ public class DivideExecutor extends Executor {
 
 	public Object execute(Node node) {
 		Object A = super.execute(node);
-		Object B = super.execute(node.getRightChild());
-		
+		while (node.getRightChild() != null) {
+			A = divide(A, super.execute(node.getRightChild()));
+			node = node.getRightChild();
+		}
+		return A;
+	}
+	
+	private Object divide(Object A, Object B) {
 		if (A instanceof Double)
 			if (B instanceof Double)
 				return (Double) A / (Double) B;

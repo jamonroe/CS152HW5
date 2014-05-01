@@ -14,7 +14,38 @@ public enum Keyword {
 	NOT ("NOT"),
 	OR ("OR"),
 	QUOTE ("QUOTE"),
-	CONS ("CONS");
+	CONS ("CONS"),
+	
+	CAR ("CAR"),
+	CDR ("CDR"),
+	CAAR ("CAAR"),
+	CADR ("CADR"),
+	CDAR ("CDAR"),
+	CDDR ("CDDR"),
+	CAAAR ("CAAAR"),
+	CAADR ("CAADR"),
+	CADAR ("CADAR"),
+	CADDR ("CADDR"),
+	CDAAR ("CDAAR"),
+	CDADR ("CDADR"),
+	CDDAR ("CDDAR"),
+	CDDDR ("CDDDR"),
+	CAAAAR ("CAAAAR"),
+	CAAADR ("CAAADR"),
+	CAADAR ("CAADAR"),
+	CAADDR ("CAADDR"),
+	CADAAR ("CADAAR"),
+	CADADR ("CADADR"),
+	CADDAR ("CADDAR"),
+	CADDDR ("CADDDR"),
+	CDAAAR ("CDAAAR"),
+	CDAADR ("CDAADR"),
+	CDADAR ("CDADAR"),
+	CDADDR ("CDADDR"),
+	CDDAAR ("CDDAAR"),
+	CDDADR ("CDDADR"),
+	CDDDAR ("CDDDAR"),
+	CDDDDR ("CDDDDR");
 	
 	private String value;
 	
@@ -31,5 +62,9 @@ public enum Keyword {
 			if (value.equalsIgnoreCase(word.toString()))
 				return word;
 		return null;
+	}
+	
+	public boolean listOp() {
+		return ordinal() >= CAR.ordinal();
 	}
 }

@@ -10,13 +10,19 @@ public class EqualExecutor extends Executor {
 		super(symtab);
 	}
 	
-	public Object execute (Node node){
-		
+	public Object execute(Node node) {
 		Object A = super.execute(node);
-		Object B = super.execute(node.getRightChild());
+		boolean eq = false;
 		
-//		if (A instanceof Double && B instanceof Double)
-			return (A.equals(B));
+		while (node.getRightChild() != null) {
+			eq = (boolean) equals(A, super.execute(node.getRightChild()));
+			node = node.getRightChild();
+		}
+		return eq;
+	}
+	
+	private Object equals(Object A, Object B) {
+		return A.equals(B);
 	}
 
 }
