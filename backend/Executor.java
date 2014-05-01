@@ -13,6 +13,7 @@ import backend.predefined.RealExecutor;
 import backend.predefined.StringExecutor;
 import backend.predefined.SubtractExecutor;
 import backend.predefined.SymbolExecutor;
+import backend.predefined.EqualExecutor;
 import frontend.token.Keyword;
 import frontend.token.Predefined;
 import frontend.token.SpecialSymbol;
@@ -108,7 +109,9 @@ public class Executor {
 					return new IntegerExecutor(symtab).execute(node.getRightChild());
 				case REAL:
 					return new RealExecutor(symtab).execute(node.getRightChild());
-			
+				case EQUAL:
+				     return new EqualExecutor(symtab).execute(node.getRightChild());
+				     
 				default:
 					return "PREDEFINED FAILED";
 				}
