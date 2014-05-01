@@ -5,10 +5,9 @@ package frontend.token;
  * null?
  * equal?
  * pair?
- * real?
  * integer?
  * symbol?
- * float?
+ * real?
  * boolean?
  * char?
  * string?
@@ -23,10 +22,9 @@ public enum Predefined {
 	NULL ("null?"),
 	EQUAL ("equal?"),
 	PAIR ("pair?"),
-	REAL ("real?"),
 	INTEGER ("integer?"),
 	SYMBOL ("symbol?"),
-	FLOAT ("float?"),
+	REAL ("real?"),
 	BOOLEAN ("boolean?"),
 	CHAR ("char?"),
 	STRING ("string?");

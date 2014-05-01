@@ -1,5 +1,17 @@
 package backend;
 
+import backend.keywords.QuoteExecutor;
+import backend.predefined.AddExecutor;
+import backend.predefined.BooleanExecutor;
+import backend.predefined.CharExecutor;
+import backend.predefined.DivideExecutor;
+import backend.predefined.IntegerExecutor;
+import backend.predefined.MultiplyExecutor;
+import backend.predefined.NullExecutor;
+import backend.predefined.RealExecutor;
+import backend.predefined.StringExecutor;
+import backend.predefined.SubtractExecutor;
+import backend.predefined.SymbolExecutor;
 import frontend.token.Keyword;
 import frontend.token.Predefined;
 import frontend.token.SpecialSymbol;
@@ -36,6 +48,8 @@ public class Executor {
 				return new LetExecutor(symtab).execute(node.getRightChild());
 			case NOT:
 				return new NotExecutor(symtab).execute(node.getRightChild());
+			case QUOTE:
+				return new QuoteExecutor(symtab).execute(node.getRightChild());
 			default:
 				return "KEYWORD FAILED";
 			}
@@ -52,7 +66,7 @@ public class Executor {
 			
 			// Child element is a list
 			case LPAREN:
-				return execute(child);
+				return new Executor(symtab).execute(child); // The new Executor is very important
 			
 			default:
 				return "SPECIAL FAILED";
@@ -87,6 +101,11 @@ public class Executor {
 					return new NullExecutor(symtab).execute(node.getRightChild());
 				case CHAR:
 					return new CharExecutor(symtab).execute(node.getRightChild());
+				case INTEGER:
+					return new IntegerExecutor(symtab).execute(node.getRightChild());
+				case REAL:
+					return new RealExecutor(symtab).execute(node.getRightChild());
+			
 				default:
 					return "PREDEFINED FAILED";
 				}

@@ -32,6 +32,9 @@ public class NumberToken extends Token {
 	
 	@Override
 	public Object getValue() {
+		if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
+		    return new Integer((int) (double) value);
+		}
 		return value;
 	}
 	
