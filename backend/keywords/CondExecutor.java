@@ -10,8 +10,7 @@ public class CondExecutor extends Executor{
 		super(symtab);
 	}
 
-	public Object execute(Node node) {
-		
+	public Object execute(Node node) {		
 		return null;
 	}
 
