@@ -1,6 +1,11 @@
 package backend;
 
+import backend.keywords.CondExecutor;
+import backend.keywords.DefineExecutor;
+import backend.keywords.IfStatementExecutor;
+import backend.keywords.LetExecutor;
 import backend.keywords.ListOpExecutor;
+import backend.keywords.NotExecutor;
 import backend.keywords.QuoteExecutor;
 import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
@@ -110,6 +115,8 @@ public class Executor {
 				case REAL:
 					return new RealExecutor(symtab).execute(node.getRightChild());
 				case EQUAL:
+				case EQ:
+				case EQSIGN:
 					return new EqualExecutor(symtab).execute(node.getRightChild());
 			
 				default:

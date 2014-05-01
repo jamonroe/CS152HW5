@@ -10,10 +10,7 @@ public class NotExecutor extends Executor{
 		super(symtab);
 	}
 
-	public Object execute(Node node) {
-		
-		// TODO add complexity when have equals
-		
+	public Object execute(Node node) {		
 		return !(Boolean) super.execute(node);
 	}
 

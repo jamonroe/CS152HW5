@@ -1,4 +1,4 @@
-(not #f)
+;(not #t)
 
 (define a 1)
 (define b 2)
