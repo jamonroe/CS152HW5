@@ -1,6 +1,11 @@
 package backend;
 
+import backend.keywords.CondExecutor;
+import backend.keywords.DefineExecutor;
+import backend.keywords.IfStatementExecutor;
+import backend.keywords.LetExecutor;
 import backend.keywords.ListOpExecutor;
+import backend.keywords.NotExecutor;
 import backend.keywords.QuoteExecutor;
 import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
@@ -52,6 +57,10 @@ public class Executor {
 				return new NotExecutor(symtab).execute(node.getRightChild());
 			case QUOTE:
 				return new QuoteExecutor(symtab).execute(node.getRightChild());
+			case LAMBDA:
+				// Need to retain the LAMBDA so we know it's not a list
+				// This is only called when LAMBDA functions are declared
+				return node; 
 			default:
 				if (((Keyword)child.getTokenValue()).listOp())
 					return new ListOpExecutor(symtab).execute(node); // Exception: need the operator
@@ -80,11 +89,21 @@ public class Executor {
 		
 		case Identifier:
 			Object value = symtab.get(child.getTokenValue().toString());
-			if (!(value instanceof Predefined)) {
-				return value;
-			} else {
+			if (value instanceof Node) {
+				Node value_node = (Node) value;
 				
-				/* Predefined Tokens */
+				/* Lambda Functions */
+				
+				if (value_node.getLeftChild() != null &&
+				    value_node.getLeftChild().getTokenValue() == Keyword.LAMBDA) {
+					return new LambdaExecutor(symtab).execute(node);
+				}
+				
+				return value;
+			} else 
+			if (value instanceof Predefined){
+				
+				/* Predefined Functions */
 					
 				switch ((Predefined) value) {
 				case ADD:
@@ -115,6 +134,12 @@ public class Executor {
 				default:
 					return "PREDEFINED FAILED";
 				}
+			}
+			else {
+				
+				/* Variable */
+				
+				return value;
 			}
 		
 		/* Boolean, Character, Number, String Tokens */

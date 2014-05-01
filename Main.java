@@ -24,8 +24,8 @@ public class Main {
         	System.out.println("\n**** Execution Results ****");
             System.out.println(exe.execute(parser.getRoot()));
         	System.out.println();
-//            System.out.println("**** Symbol Table Entries ****\n");
-//            System.out.println(parser.getTable().toString());
+            System.out.println("**** Symbol Table Entries ****\n");
+            System.out.println(parser.getTable().toString());
             System.out.println("**** Parser Results ****\n");
         }
 	}
