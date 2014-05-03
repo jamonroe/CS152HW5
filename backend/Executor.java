@@ -1,11 +1,16 @@
 package backend;
 
+import backend.keywords.AndExecutor;
+import backend.keywords.AppendExecutor;
 import backend.keywords.CondExecutor;
+import backend.keywords.ConsExecutor;
 import backend.keywords.DefineExecutor;
 import backend.keywords.IfStatementExecutor;
+import backend.keywords.LambdaExecutor;
 import backend.keywords.LetExecutor;
 import backend.keywords.ListOpExecutor;
 import backend.keywords.NotExecutor;
+import backend.keywords.OrExecutor;
 import backend.keywords.QuoteExecutor;
 import backend.predefined.AddExecutor;
 import backend.predefined.BooleanExecutor;
@@ -14,6 +19,7 @@ import backend.predefined.DivideExecutor;
 import backend.predefined.IntegerExecutor;
 import backend.predefined.MultiplyExecutor;
 import backend.predefined.NullExecutor;
+import backend.predefined.PairExecutor;
 import backend.predefined.RealExecutor;
 import backend.predefined.StringExecutor;
 import backend.predefined.SubtractExecutor;
@@ -61,6 +67,14 @@ public class Executor {
 				// Need to retain the LAMBDA so we know it's not a list
 				// This is only called when LAMBDA functions are declared
 				return node; 
+			case AND:
+				return new AndExecutor(symtab).execute(node.getRightChild());
+			case OR:
+				return new OrExecutor(symtab).execute(node.getRightChild());
+			case CONS:
+				return new ConsExecutor(symtab).execute(node.getRightChild());
+			case APPEND:
+				return new AppendExecutor(symtab).execute(node.getRightChild());
 			default:
 				if (((Keyword)child.getTokenValue()).listOp())
 					return new ListOpExecutor(symtab).execute(node); // Exception: need the operator
@@ -128,6 +142,8 @@ public class Executor {
 					return new IntegerExecutor(symtab).execute(node.getRightChild());
 				case REAL:
 					return new RealExecutor(symtab).execute(node.getRightChild());
+				case PAIR:
+					return new PairExecutor(symtab).execute(node.getRightChild());
 				case EQUAL:
 				case EQ:
 				case EQSIGN:

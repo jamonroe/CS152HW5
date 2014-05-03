@@ -2,6 +2,7 @@ package frontend.token;
 
 public enum Keyword {
 	AND ("AND"),
+	APPEND ("APPEND"),
 	BEGIN ("BEGIN"),
 	COND ("COND"),
 	DEFINE ("DEFINE"),
