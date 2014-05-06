@@ -1,3 +1,18 @@
+(define float? 
+ (lambda (x) 
+ (and (real? x) (not (integer? x))) 
+)) 
+
+(define same-type? 
+ (lambda (x y) 
+ (or (and (symbol? x) (symbol? y)) 
+ (and (integer? x) (integer? y)) 
+ (and (float? x) (float? y)) 
+ (and (boolean? x) (boolean? y)) 
+ (and (char? x) (char? y)) 
+ (and (string? x) (string? y))) 
+)) 
+
 (define same-structure? 
  (lambda (x y) 
  (cond 
@@ -9,21 +24,6 @@
  (same-structure? (cdr x) (cdr y)))) 
  (else (and (same-type? (car x) (car y)) 
  (same-structure? (cdr x) (cdr y))))) 
-)) 
- 
-(define float? 
- (lambda (x) 
- (and (real? x) (not (integer? x))) 
-)) 
- 
-(define same-type? 
- (lambda (x y) 
- (or (and (symbol? x) (symbol? y)) 
- (and (integer? x) (integer? y)) 
- (and (float? x) (float? y)) 
- (and (boolean? x) (boolean? y)) 
- (and (char? x) (char? y)) 
- (and (string? x) (string? y))) 
 )) 
  
 (same-structure? '(1 (a (b 3.14) ((c)))) '(3 (z (x 1.23) ((q))))) ; #t 

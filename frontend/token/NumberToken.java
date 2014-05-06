@@ -24,6 +24,14 @@ public class NumberToken extends Token {
 		}
 		value = Double.parseDouble(result);
 	}
+	
+	public NumberToken(Double value) {
+		this.value = value;
+	}
+	
+	public NumberToken(Integer value) {
+		this.value = new Double(value);
+	}
 
 	private boolean digit(char c) {
 		if (c >= '0' && c <= '9') return true;
@@ -47,5 +55,9 @@ public class NumberToken extends Token {
 	
 	public TokenType getType() {
 		return TokenType.Number;
+	}
+	
+	public NumberToken clone() {
+		return new NumberToken(value);
 	}
 }

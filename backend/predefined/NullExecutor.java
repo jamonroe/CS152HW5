@@ -1,5 +1,6 @@
 package backend.predefined;
 
+import frontend.token.SpecialSymbol;
 import backend.Executor;
 import intermediate.Node;
 import intermediate.RuntimeStack;
@@ -12,6 +13,15 @@ public class NullExecutor extends Executor {
 	}
 
 	public Object execute(Node node) {
-		return super.execute(node) == null;
+		Object result = super.execute(node);
+		if (result == null)
+			return true;
+		if (result instanceof Node) {
+			Node temp = (Node) result;
+			if (temp.getTokenValue() == SpecialSymbol.LPAREN
+			    && temp.getLeftChild() == null)
+				return true;
+		}
+		return false;
 	}
 }

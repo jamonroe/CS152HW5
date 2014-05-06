@@ -5,9 +5,12 @@ import backend.keywords.AppendExecutor;
 import backend.keywords.CondExecutor;
 import backend.keywords.ConsExecutor;
 import backend.keywords.DefineExecutor;
+import backend.keywords.GreaterExecutor;
 import backend.keywords.IfStatementExecutor;
 import backend.keywords.LambdaExecutor;
 import backend.keywords.LetExecutor;
+import backend.keywords.LetStarExecutor;
+import backend.keywords.ListExecutor;
 import backend.keywords.ListOpExecutor;
 import backend.keywords.NotExecutor;
 import backend.keywords.OrExecutor;
@@ -62,6 +65,10 @@ public class Executor {
 				return new CondExecutor(symtabs, runtime).execute(node.getRightChild());
 			case LET:
 				return new LetExecutor(symtabs, runtime).execute(node.getRightChild());
+			case LETSTAR:
+				return new LetStarExecutor(symtabs, runtime).execute(node.getRightChild());
+			case LIST:
+				return new ListExecutor(symtabs, runtime).execute(node.getRightChild());
 			case NOT:
 				return new NotExecutor(symtabs, runtime).execute(node.getRightChild());
 			case QUOTE:
@@ -96,6 +103,7 @@ public class Executor {
 			
 			// Child element is a list
 			case LPAREN:
+			case LBRACKET:
 				return new Executor(symtabs, runtime).execute(child); // The new Executor is very important
 			
 			default:
@@ -151,7 +159,8 @@ public class Executor {
 				case EQ:
 				case EQSIGN:
 					return new EqualExecutor(symtabs, runtime).execute(node.getRightChild());
-			
+				case GREATER:
+					return new GreaterExecutor(symtabs, runtime).execute(node.getRightChild());
 				default:
 					return "PREDEFINED FAILED";
 				}

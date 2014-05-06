@@ -22,6 +22,7 @@ public enum Predefined {
 	SUBTRACT ("-"),
 	MULTIPLY ("*"),
 	DIVIDE ("/"),
+	GREATER (">"),
 	NULL ("null?"),
 	EQSIGN ("="),
 	EQUAL ("equal?"),

@@ -2,7 +2,6 @@ package backend.keywords;
 
 import intermediate.Node;
 import intermediate.RuntimeStack;
-import intermediate.SymTab;
 import intermediate.SymTabStack;
 import backend.Executor;
 

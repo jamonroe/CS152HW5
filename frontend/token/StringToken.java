@@ -18,6 +18,10 @@ public class StringToken extends Token {
 		} 
 	}
 	
+	public StringToken(String value) {
+		this.value = value;
+	}
+	
 	@Override
 	public Object getValue() {
 		return value;
@@ -29,5 +33,9 @@ public class StringToken extends Token {
 	
 	public TokenType getType() {
 		return TokenType.String;
+	}
+
+	public StringToken clone() {
+		return new StringToken(value);
 	}
 }

@@ -11,4 +11,15 @@ public abstract class Token {
 	public int getLine() {
 		return line;
 	}
+	public boolean equals(Object object) {
+		if (!(object instanceof Token))
+			return false;
+		Token token = (Token) object;
+		if (getType() != token.getType())
+			return false;
+		if (!getValue().toString().equalsIgnoreCase(token.getValue().toString()))
+			return false;
+		return true;
+	}
+	public abstract Token clone();
 }

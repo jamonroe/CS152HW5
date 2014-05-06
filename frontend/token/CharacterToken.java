@@ -12,6 +12,10 @@ public class CharacterToken extends Token {
 		value = src.next();
 	}
 	
+	public CharacterToken(Character value) {
+		this.value = value;
+	}
+	
 	@Override
 	public Object getValue() {
 		return value;
@@ -23,5 +27,9 @@ public class CharacterToken extends Token {
 	
 	public TokenType getType() {
 		return TokenType.Character;
+	}
+
+	public CharacterToken clone() {
+		return new CharacterToken(value);
 	}
 }

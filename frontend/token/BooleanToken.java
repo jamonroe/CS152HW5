@@ -19,6 +19,10 @@ public class BooleanToken extends Token {
 		}
 	}
 	
+	public BooleanToken(Boolean value) {
+		this.value = value;
+	}
+	
 	@Override
 	public Object getValue() {
 		return value;
@@ -33,5 +37,9 @@ public class BooleanToken extends Token {
 	
 	public TokenType getType() {
 		return TokenType.Boolean;
+	}
+	
+	public BooleanToken clone() {
+		return new BooleanToken(value);
 	}
 }

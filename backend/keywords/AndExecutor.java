@@ -15,10 +15,10 @@ public class AndExecutor extends Executor {
 	public Object execute(Node node) {
 		Object A = super.execute(node);
 		boolean eq = false;
-		
-		while (node.getRightChild() != null) {
-			eq = (boolean) and(A, super.execute(node.getRightChild()));
-			node = node.getRightChild();
+		Node temp = node;
+		while (temp.getRightChild() != null) {
+			eq = (boolean) and(A, super.execute(temp.getRightChild()));
+			temp = temp.getRightChild();
 		}
 		return eq;
 	}

@@ -11,6 +11,7 @@ public enum Keyword {
 	QUOTE ("QUOTE"),
 	CONS ("CONS"),
 	DEFINE ("DEFINE"),
+	LIST ("LIST"),
 	
 	LAMBDA ("LAMBDA"),
 	LET ("LET"),

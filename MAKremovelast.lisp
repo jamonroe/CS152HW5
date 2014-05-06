@@ -1,3 +1,11 @@
+(define member? 
+ (lambda (item lst) 
+ 	(cond 
+ 		((null? lst) #f) 
+ 		((equal? item (car lst)) #t) 
+ 		(else (member? item (cdr lst))) 
+))) 
+
 (define remove-last 
  (lambda (item lst) 
  (cond 

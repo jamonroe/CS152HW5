@@ -14,7 +14,7 @@ public class SpecialToken extends Token {
 		symbol = SpecialSymbol.toEnum(value);
 	}
         
-    public SpecialToken (String string) throws IOException {
+    public SpecialToken (String string) {
 		value = string;
 		symbol = SpecialSymbol.toEnum(string);
 	}
@@ -32,5 +32,10 @@ public class SpecialToken extends Token {
 	
 	public TokenType getType() {
 		return TokenType.Special;
+	}
+
+	@Override
+	public SpecialToken clone() {
+		return new SpecialToken(value);
 	}
 }

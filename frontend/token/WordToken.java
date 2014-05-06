@@ -28,6 +28,11 @@ public class WordToken extends Token {
 		}
 	}
 
+	public WordToken(Object value, TokenType type) {
+		this.value = value;
+		this.type = type;
+	}
+	
 	private boolean valid(String value, char c) {
 		if (SpecialSymbol.toEnum("" + c) == null 
 		&&	c != ' '
@@ -53,5 +58,10 @@ public class WordToken extends Token {
 	
 	public TokenType getType() {
 		return type;
+	}
+
+	@Override
+	public WordToken clone() {
+		return new WordToken(value, type);
 	}
 }
