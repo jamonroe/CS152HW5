@@ -65,16 +65,21 @@ public class Parser {
     		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
         }
         currentLine += " " + temp.toString();
-        
+
+		car.connect(symtabs.peek());
+		
         // Add identifiers to symbol table
-        boolean pre = false;
         if (car.getToken().getType() == TokenType.Identifier){
         	if (car.getTokenValue() instanceof Predefined) {
-        		pre = true;
         		car.connect(global);
-        	}
-        	if (symtabs.search(car.getTokenValue().toString()) == null) {
-        		symtabs.peek().put(car.getTokenValue().toString(), car); 
+        	} else {
+        		
+	        	Node value = (Node) symtabs.search(car.getTokenValue().toString());
+	        	if (value == null) {
+	        		symtabs.peek().put(car.getTokenValue().toString(), car);
+	        	} else {
+	        		car.connect(value.getTable());
+	        	}
         	}
         }
         
@@ -83,9 +88,6 @@ public class Parser {
         	((Keyword)car.getTokenValue()).newScope()) {
         	scoped = true;
         	car.connect(symtabs.push());
-        } else {
-        	if (!pre)
-        		car.connect(symtabs.peek());
         }
         
         // LEFT CHILD

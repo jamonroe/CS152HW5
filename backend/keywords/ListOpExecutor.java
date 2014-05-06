@@ -3,7 +3,6 @@ package backend.keywords;
 import frontend.token.Keyword;
 import intermediate.Node;
 import intermediate.RuntimeStack;
-import intermediate.SymTab;
 import intermediate.SymTabStack;
 import backend.Executor;
 
@@ -22,6 +21,15 @@ public class ListOpExecutor extends Executor {
 				result = result.getLeftChild();
 			else
 				result = result.getRightChild();
+		}
+		if (result instanceof Node) {
+			switch (result.getToken().getType()) {
+			case Boolean:
+			case Character:
+			case Number:
+			case String:
+				return result.getTokenValue();
+			}
 		}
 		return result;
 	}

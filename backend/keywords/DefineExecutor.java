@@ -1,5 +1,6 @@
 package backend.keywords;
 
+import frontend.token.SpecialSymbol;
 import backend.Executor;
 import intermediate.Node;
 import intermediate.RuntimeStack;
@@ -15,7 +16,10 @@ public class DefineExecutor extends Executor {
 		Node variable = node.getLeftChild();
 		
 		// Add function info into symbol table
-		symtabs.peek().put(variable.getTokenValue().toString(), node.getRightChild().getLeftChild());
+		if (node.getRightChild().getLeftChild().getTokenValue() == SpecialSymbol.APOSTROPHE)
+			symtabs.peek().put(variable.getTokenValue().toString(), node.getRightChild().getRightChild().getLeftChild());
+		else 
+			symtabs.peek().put(variable.getTokenValue().toString(), node.getRightChild().getLeftChild());
 		
 		runtime.add(variable.getTokenValue().toString(), super.execute(node.getRightChild()));
 		

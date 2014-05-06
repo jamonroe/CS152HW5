@@ -10,12 +10,11 @@ public enum Keyword {
 	OR ("OR"),
 	QUOTE ("QUOTE"),
 	CONS ("CONS"),
-
 	DEFINE ("DEFINE"),
+	
 	LAMBDA ("LAMBDA"),
 	LET ("LET"),
 	LETSTAR ("LET*"),
-	LETREC ("LETREC"),
 	
 	CAR ("CAR"),
 	CDR ("CDR"),
@@ -70,7 +69,7 @@ public enum Keyword {
 	}
 	
 	public boolean newScope() {
-		return ordinal() >= DEFINE.ordinal() &&
-			   ordinal() <= LETREC.ordinal();
+		return ordinal() >= LAMBDA.ordinal() &&
+			   ordinal() <= LETSTAR.ordinal();
 	}
 }

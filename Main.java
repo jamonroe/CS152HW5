@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-        String src = "lambda.lisp";
+        String src = "MAKmember.lisp";
         Source source = new Source(new FileInputStream(new File(src)));
         Scanner scan = new Scanner(source);	
         Parser parser = new Parser(scan);

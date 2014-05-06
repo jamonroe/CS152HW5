@@ -1,7 +1,9 @@
-package backend;
+package backend.keywords;
 
 import java.util.ArrayList;
 
+import frontend.token.SpecialSymbol;
+import backend.Executor;
 import intermediate.Node;
 import intermediate.RuntimeStack;
 import intermediate.SymTabStack;
@@ -20,6 +22,9 @@ public class LambdaExecutor extends Executor {
 		ArrayList<Object> passed_parameters = new ArrayList<Object>();
 		while (passed_param != null) {
 			passed_parameters.add(super.execute(passed_param));
+			if (passed_param.getLeftChild().getTokenValue() == SpecialSymbol.APOSTROPHE) {
+				passed_param = passed_param.getRightChild();
+			}
 			passed_param = passed_param.getRightChild();
 		}
 		
@@ -38,7 +43,7 @@ public class LambdaExecutor extends Executor {
 		}
 
 		// Execute the function
-		Object result = super.execute(func.getRightChild().getRightChild());
+		Object result = super.execute(func.getRightChild().getRightChild().getLeftChild());
 
 		// Pop the scope
 		runtime.pop();

@@ -1,9 +1,9 @@
 package backend.keywords;
 
+import frontend.token.Keyword;
 import backend.Executor;
 import intermediate.Node;
 import intermediate.RuntimeStack;
-import intermediate.SymTab;
 import intermediate.SymTabStack;
 
 public class CondExecutor extends Executor{
@@ -14,29 +14,22 @@ public class CondExecutor extends Executor{
 
 	public Object execute(Node node) {		
 			
-		Node temp = node.getRightChild(); // entire expression	
+		Node temp = node; // entire expression	
 		
-		// Base case: first cond expression is true
-		if ((Boolean) super.execute(temp.getLeftChild().getLeftChild()))
-			return super.execute(temp.getLeftChild().getRightChild());
-		
-		else {
-			while (true){
-				
-				// Advance down the tree
-				temp = temp.getRightChild().getRightChild();		
-				
-				// If else statement, return
-				if (temp.getLeftChild().getLeftChild().toString().trim().equals("ELSE")){
-					return super.execute(temp.getLeftChild().getRightChild());
-				}
-				
-				// If reaches true expression, return
-				else if ((Boolean) super.execute(temp.getLeftChild().getLeftChild())){
-					return super.execute(temp.getLeftChild().getRightChild());
-				}			
+		while (temp != null) {
+			// If else statement, return
+			if (temp.getLeftChild().getLeftChild().getTokenValue() == Keyword.ELSE){
+				return super.execute(temp.getLeftChild().getRightChild());
 			}
+			
+			if ((Boolean) super.execute(temp.getLeftChild().getLeftChild()))
+				   return super.execute(temp.getLeftChild().getRightChild());
+			
+			temp = temp.getRightChild();
+			
 		}
+		
+		return null;
 	}
 }
 

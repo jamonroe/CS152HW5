@@ -95,7 +95,8 @@ public class Scanner {
 		// skip spaces, carriage returns, and newlines
 		while(src.peek() == ' '  ||
 			  src.peek() == '\r' ||
-			  src.peek() == '\n') 
+			  src.peek() == '\n' ||
+			  src.peek() == '\t') 
 		{
 			if (src.peek() == '\n')
 				line++;

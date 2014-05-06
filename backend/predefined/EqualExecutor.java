@@ -23,7 +23,10 @@ public class EqualExecutor extends Executor {
 	}
 	
 	private Object equals(Object A, Object B) {
+//		if (A instanceof Node)
+//			A = ((Node) A).getTokenValue();
+//		if (B instanceof Node)
+//			B = ((Node) B).getTokenValue();
 		return A.equals(B);
 	}
-
 }

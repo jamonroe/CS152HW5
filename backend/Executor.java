@@ -6,6 +6,7 @@ import backend.keywords.CondExecutor;
 import backend.keywords.ConsExecutor;
 import backend.keywords.DefineExecutor;
 import backend.keywords.IfStatementExecutor;
+import backend.keywords.LambdaExecutor;
 import backend.keywords.LetExecutor;
 import backend.keywords.ListOpExecutor;
 import backend.keywords.NotExecutor;
@@ -104,10 +105,7 @@ public class Executor {
 		/* Identifier Tokens */
 		
 		case Identifier:
-			Object value = child.getTable()
-					.get(
-					child.getTokenValue()
-					.toString());
+			Object value = child.getTable().get(child.getTokenValue().toString());
 			if (value instanceof Node) {
 				Node value_node = (Node) value;
 				
