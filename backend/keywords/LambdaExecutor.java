@@ -35,7 +35,7 @@ public class LambdaExecutor extends Executor {
 		}
 		
 		// Push the new scope
-		runtime.push(func.getTable().getLevel());
+		runtime.push(func.getTable().getLevel() + 1);
 		
 		// Add the parameters
 		for (int i = 0; i < func_parameters.size(); i++) {

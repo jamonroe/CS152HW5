@@ -17,7 +17,6 @@ public class ConsExecutor extends Executor{
 		super(symtabs, runtime);
 	}
 
-	/* ( ' a ' (b)) */
 	public Object execute(Node node){
 		Object first = super.execute(node);
 		Object second;
@@ -27,7 +26,7 @@ public class ConsExecutor extends Executor{
 		else 
 			second = super.execute(node.getRightChild());
 		
-		Node first_node, result = new Node(new SpecialToken("("));
+		Node first_node, second_node, result = new Node(new SpecialToken("("));
 		if (first instanceof Integer)
 			first_node = new Node(new NumberToken((Integer) first));
 		else if (first instanceof Double)
@@ -41,8 +40,21 @@ public class ConsExecutor extends Executor{
 		else
 			first_node = (Node) first;
 		
+		if (second instanceof Integer)
+			second_node = new Node(new NumberToken((Integer) first));
+		else if (second instanceof Double)
+			second_node = new Node(new NumberToken((Double) first));
+		else if (second instanceof Boolean)
+			second_node = new Node(new BooleanToken((Boolean) first));
+		else if (second instanceof Character)
+			second_node = new Node(new CharacterToken((Character) first));
+		else if (second instanceof String)
+			second_node = new Node(new StringToken((String) first));
+		else
+			second_node = (Node) second;
+		
 		result.setLeftChild(first_node.clone());
-		result.setRightChild(((Node) second).clone());
+		result.setRightChild(second_node.clone());
 		
 		return result;
 	}

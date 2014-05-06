@@ -35,10 +35,11 @@ public class Parser {
         Token token = scan.next(); // LPAREN
         
         if (token != null && token.getValue() == SpecialSymbol.LPAREN) {
+            System.out.println("\n**** Parser Results ****\n");
         	lineNumber = token.getLine();
             currentLine = String.format("%02d: ", lineNumber) + token.toString();
     		// Print first parenthesis
-            System.out.println(String.format("%-14s: %s", token.getType(), token.toString()));
+//            System.out.println(String.format("%-14s: %s", token.getType(), token.toString()));
         	head = new Node(token);
             parseList(head, true);
             // Print final line
@@ -56,16 +57,18 @@ public class Parser {
     	if((temp = scan.next()) == null) return;
         Node car = new Node(temp); 
 
+        /* Begin print out */
         if (temp.getLine() != lineNumber) {
-        	System.out.println(currentLine + "\n");
-    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+        	System.out.println(currentLine);
+//    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
         	lineNumber = temp.getLine();
         	currentLine = String.format("%02d: ", lineNumber);
         } else {
-    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+//    		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
         }
         currentLine += " " + temp.toString();
-
+        /* End print out */
+        
 		car.connect(symtabs.peek());
 		
         // Add identifiers to symbol table
@@ -110,18 +113,18 @@ public class Parser {
     	if (real) {
     		temp = scan.next();
     		if (temp.getLine() != lineNumber) {
-            	System.out.println(currentLine + "\n");
-        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+            	System.out.println(currentLine);
+//        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
             	lineNumber = temp.getLine();
             	currentLine = String.format("%02d: ", lineNumber);
             } else {
-        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
+//        		System.out.println(String.format("%-14s: %s", temp.getType(), temp.toString()));
             }
             currentLine += " " + temp.toString();
     	}
     	
     	if (scoped) {
-    		System.out.println(symtabs.pop());
+    		symtabs.pop();
     	}
     }
     

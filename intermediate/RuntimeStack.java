@@ -21,13 +21,12 @@ public class RuntimeStack extends Stack<Record> {
 	public Object search(String key) {
 		int top = -1;
 		for (int i = 0; i < STACK_MAX; i++) {
-			if (display[i] == null) {
-				top = i - 1;
-				break;
+			if (display[i] != null) {
+				top = i;
 			}
 		}
 		for (int i = top; i >= 0; i--) {
-			if (display[i].containsKey(key)) {
+			if (display[i] != null && display[i].containsKey(key)) {
 				return display[i].get(key);
 			}
 		}

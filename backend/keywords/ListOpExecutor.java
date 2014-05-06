@@ -1,6 +1,7 @@
 package backend.keywords;
 
 import frontend.token.Keyword;
+import frontend.token.SpecialToken;
 import intermediate.Node;
 import intermediate.RuntimeStack;
 import intermediate.SymTabStack;
@@ -16,11 +17,15 @@ public class ListOpExecutor extends Executor {
 		Keyword key = (Keyword) node.getLeftChild().getTokenValue();
 		Node result = (Node) super.execute(node.getRightChild());
 		char[] ops = key.toString().substring(1, key.toString().length() - 1).toLowerCase().toCharArray();
-		for (char c : ops) {
-			if (c == 'a')
+		
+		for (int i = ops.length - 1; i >= 0; i--) {
+			if (ops[i] == 'a')
 				result = result.getLeftChild();
-			else
+			else {
 				result = result.getRightChild();
+				if (result == null && i == 0)
+					return new Node(new SpecialToken("("));
+			}
 		}
 		if (result instanceof Node) {
 			switch (result.getToken().getType()) {
@@ -31,6 +36,6 @@ public class ListOpExecutor extends Executor {
 				return result.getTokenValue();
 			}
 		}
-		return result;
+		return result.clone();
 	}
 }

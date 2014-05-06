@@ -113,7 +113,7 @@ public class Executor {
 		/* Identifier Tokens */
 		
 		case Identifier:
-			Object value = child.getTable().get(child.getTokenValue().toString());
+			Object value = runtime.search(child.getTokenValue().toString());
 			if (value instanceof Node) {
 				Node value_node = (Node) value;
 				

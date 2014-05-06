@@ -1,10 +1,10 @@
 (pair? 1)
-; #f
+;f
 (pair? (cons 1 2))
-; #t
+;t
 (pair? (list 1 2))
-; #t
+;t
 (pair? '(1 2))
-; #t
+;t
 (pair? '())
-; #f
+;f

@@ -13,22 +13,26 @@ import frontend.Source;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-            
-        String src = "executor.lisp";
+
+		if (args.length == 0) {
+			System.out.println("Please pass the lisp file as a parameter");
+			return;
+		}
+		
+		String src = args[0];
+		
         Source source = new Source(new FileInputStream(new File(src)));
         Scanner scan = new Scanner(source);	
         Parser parser = new Parser(scan);
         Executor exe = new Executor(parser.getStack(), new RuntimeStack());
 
-        System.out.println("**** Parser Results ****\n");
+        Object result;
         while (parser.parse() != null) {
-        	System.out.println("\n**** Execution Results ****");
-            System.out.println(exe.execute(parser.getRoot()));
-        	System.out.println();
-//            System.out.println("**** Symbol Table Entries ****\n");
-//            System.out.println(parser.getTable().toString());
-//            System.out.println("**** Parser Results ****\n");
-		
+        	result = exe.execute(parser.getRoot());
+        	if (result != null) {
+            	System.out.println("\n**** Execution Results ****\n");
+        		System.out.println(exe.execute(parser.getRoot()));
+        	}
         }
 	}
 }

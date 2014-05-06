@@ -12,11 +12,10 @@ public class OrExecutor extends Executor{
 	}
 	
 	public Object execute(Node node) {
-		Object A = super.execute(node);
-		boolean eq = false;
+		boolean eq = (Boolean) super.execute(node);
 		
 		while (node.getRightChild() != null) {
-			eq = (boolean) or(A, super.execute(node.getRightChild()));
+			eq = (boolean) or(eq, super.execute(node.getRightChild()));
 			node = node.getRightChild();
 		}
 		return eq;

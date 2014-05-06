@@ -1,5 +1,6 @@
 package backend.predefined;
 
+import frontend.token.SpecialSymbol;
 import intermediate.Node;
 import intermediate.RuntimeStack;
 import intermediate.SymTabStack;
@@ -12,6 +13,15 @@ public class PairExecutor extends Executor {
 	}
 
 	public Object execute(Node node) {
-		return (Boolean) true;
+		Object result = super.execute(node);
+		if (result instanceof Node) {
+			Node temp = (Node) result;
+			if (temp.getLeftChild() == null) return false;
+			if (temp.getRightChild() != null) return true;
+			if (temp.getLeftChild().getTokenValue() == SpecialSymbol.LPAREN)
+				return temp.getLeftChild().getLeftChild() != null;
+			return true;
+		}
+		return false;
 	}
 }
