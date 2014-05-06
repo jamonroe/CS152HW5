@@ -2,12 +2,13 @@ package backend.predefined;
 
 import backend.Executor;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class IntegerExecutor extends Executor {
 
-	public IntegerExecutor(SymbolTable symtab) {
-		super(symtab);
+	public IntegerExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {

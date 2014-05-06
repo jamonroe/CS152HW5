@@ -1,13 +1,15 @@
 package backend.keywords;
 
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTab;
+import intermediate.SymTabStack;
 import backend.Executor;
 
 public class AndExecutor extends Executor {
 
-	public AndExecutor(SymbolTable symtab) {
-		super(symtab);
+	public AndExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 	
 	public Object execute(Node node) {

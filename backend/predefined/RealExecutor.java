@@ -2,12 +2,13 @@ package backend.predefined;
 
 import backend.Executor;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class RealExecutor extends Executor {
 
-	public RealExecutor(SymbolTable symtab) {
-		super(symtab);
+	public RealExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {

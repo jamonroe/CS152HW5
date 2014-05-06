@@ -6,7 +6,6 @@ import backend.keywords.CondExecutor;
 import backend.keywords.ConsExecutor;
 import backend.keywords.DefineExecutor;
 import backend.keywords.IfStatementExecutor;
-import backend.keywords.LambdaExecutor;
 import backend.keywords.LetExecutor;
 import backend.keywords.ListOpExecutor;
 import backend.keywords.NotExecutor;
@@ -29,14 +28,17 @@ import frontend.token.Keyword;
 import frontend.token.Predefined;
 import frontend.token.SpecialSymbol;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class Executor {
 
-	protected SymbolTable symtab;
+	protected SymTabStack symtabs;
+	protected RuntimeStack runtime;
 	
-	public Executor(SymbolTable symtab) {
-		this.symtab = symtab;
+	public Executor(SymTabStack symtabs, RuntimeStack runtime) {
+		this.symtabs = symtabs;
+		this.runtime = runtime;
 	}
 	
 	public Object execute(Node node) {
@@ -52,32 +54,32 @@ public class Executor {
 		case Keyword:
 			switch ((Keyword)child.getTokenValue()) {
 			case IF:
-				return new IfStatementExecutor(symtab).execute(node.getRightChild());
+				return new IfStatementExecutor(symtabs, runtime).execute(node.getRightChild());
 			case DEFINE:
-				return new DefineExecutor(symtab).execute(node.getRightChild());
+				return new DefineExecutor(symtabs, runtime).execute(node.getRightChild());
 			case COND:
-				return new CondExecutor(symtab).execute(node.getRightChild());
+				return new CondExecutor(symtabs, runtime).execute(node.getRightChild());
 			case LET:
-				return new LetExecutor(symtab).execute(node.getRightChild());
+				return new LetExecutor(symtabs, runtime).execute(node.getRightChild());
 			case NOT:
-				return new NotExecutor(symtab).execute(node.getRightChild());
+				return new NotExecutor(symtabs, runtime).execute(node.getRightChild());
 			case QUOTE:
-				return new QuoteExecutor(symtab).execute(node.getRightChild());
+				return new QuoteExecutor(symtabs, runtime).execute(node.getRightChild());
 			case LAMBDA:
 				// Need to retain the LAMBDA so we know it's not a list
 				// This is only called when LAMBDA functions are declared
 				return node; 
 			case AND:
-				return new AndExecutor(symtab).execute(node.getRightChild());
+				return new AndExecutor(symtabs, runtime).execute(node.getRightChild());
 			case OR:
-				return new OrExecutor(symtab).execute(node.getRightChild());
+				return new OrExecutor(symtabs, runtime).execute(node.getRightChild());
 			case CONS:
-				return new ConsExecutor(symtab).execute(node.getRightChild());
+				return new ConsExecutor(symtabs, runtime).execute(node.getRightChild());
 			case APPEND:
-				return new AppendExecutor(symtab).execute(node.getRightChild());
+				return new AppendExecutor(symtabs, runtime).execute(node.getRightChild());
 			default:
 				if (((Keyword)child.getTokenValue()).listOp())
-					return new ListOpExecutor(symtab).execute(node); // Exception: need the operator
+					return new ListOpExecutor(symtabs, runtime).execute(node); // Exception: need the operator
 				return "KEYWORD FAILED";
 			}
 		
@@ -93,7 +95,7 @@ public class Executor {
 			
 			// Child element is a list
 			case LPAREN:
-				return new Executor(symtab).execute(child); // The new Executor is very important
+				return new Executor(symtabs, runtime).execute(child); // The new Executor is very important
 			
 			default:
 				return "SPECIAL FAILED";
@@ -102,7 +104,10 @@ public class Executor {
 		/* Identifier Tokens */
 		
 		case Identifier:
-			Object value = symtab.get(child.getTokenValue().toString());
+			Object value = child.getTable()
+					.get(
+					child.getTokenValue()
+					.toString());
 			if (value instanceof Node) {
 				Node value_node = (Node) value;
 				
@@ -110,10 +115,10 @@ public class Executor {
 				
 				if (value_node.getLeftChild() != null &&
 				    value_node.getLeftChild().getTokenValue() == Keyword.LAMBDA) {
-					return new LambdaExecutor(symtab).execute(node);
+					return new LambdaExecutor(symtabs, runtime).execute(node);
 				}
 				
-				return value;
+				return runtime.search(child.getTokenValue().toString());
 			} else 
 			if (value instanceof Predefined){
 				
@@ -121,43 +126,42 @@ public class Executor {
 					
 				switch ((Predefined) value) {
 				case ADD:
-					return new AddExecutor(symtab).execute(node.getRightChild());
+					return new AddExecutor(symtabs, runtime).execute(node.getRightChild());
 				case SUBTRACT:
-					return new SubtractExecutor(symtab).execute(node.getRightChild());
+					return new SubtractExecutor(symtabs, runtime).execute(node.getRightChild());
 				case MULTIPLY:
-					return new MultiplyExecutor(symtab).execute(node.getRightChild());
+					return new MultiplyExecutor(symtabs, runtime).execute(node.getRightChild());
 				case DIVIDE:
-					return new DivideExecutor(symtab).execute(node.getRightChild());
+					return new DivideExecutor(symtabs, runtime).execute(node.getRightChild());
 				case SYMBOL:
-					return new SymbolExecutor(symtab).execute(node.getRightChild());
+					return new SymbolExecutor(symtabs, runtime).execute(node.getRightChild());
 				case STRING:
-					return new StringExecutor(symtab).execute(node.getRightChild());
+					return new StringExecutor(symtabs, runtime).execute(node.getRightChild());
 				case BOOLEAN:
-					return new BooleanExecutor(symtab).execute(node.getRightChild());
+					return new BooleanExecutor(symtabs, runtime).execute(node.getRightChild());
 				case NULL:
-					return new NullExecutor(symtab).execute(node.getRightChild());
+					return new NullExecutor(symtabs, runtime).execute(node.getRightChild());
 				case CHAR:
-					return new CharExecutor(symtab).execute(node.getRightChild());
+					return new CharExecutor(symtabs, runtime).execute(node.getRightChild());
 				case INTEGER:
-					return new IntegerExecutor(symtab).execute(node.getRightChild());
+					return new IntegerExecutor(symtabs, runtime).execute(node.getRightChild());
 				case REAL:
-					return new RealExecutor(symtab).execute(node.getRightChild());
+					return new RealExecutor(symtabs, runtime).execute(node.getRightChild());
 				case PAIR:
-					return new PairExecutor(symtab).execute(node.getRightChild());
+					return new PairExecutor(symtabs, runtime).execute(node.getRightChild());
 				case EQUAL:
 				case EQ:
 				case EQSIGN:
-					return new EqualExecutor(symtab).execute(node.getRightChild());
+					return new EqualExecutor(symtabs, runtime).execute(node.getRightChild());
 			
 				default:
 					return "PREDEFINED FAILED";
 				}
-			}
-			else {
+			} else {
 				
 				/* Variable */
 				
-				return value;
+				return runtime.search(child.getTokenValue().toString());
 			}
 		
 		/* Boolean, Character, Number, String Tokens */

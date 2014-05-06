@@ -2,13 +2,15 @@ package backend.keywords;
 
 import frontend.token.Keyword;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTab;
+import intermediate.SymTabStack;
 import backend.Executor;
 
 public class ListOpExecutor extends Executor {
 
-	public ListOpExecutor(SymbolTable symtab) {
-		super(symtab);
+	public ListOpExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {

@@ -3,19 +3,19 @@ package frontend.token;
 public enum Keyword {
 	AND ("AND"),
 	APPEND ("APPEND"),
-	BEGIN ("BEGIN"),
 	COND ("COND"),
-	DEFINE ("DEFINE"),
 	ELSE ("ELSE"),
 	IF ("IF"),
-	LAMBDA ("LAMBDA"),
-	LET ("LET"),
-	LETSTAR ("LET*"),
-	LETREC ("LETREC"),
 	NOT ("NOT"),
 	OR ("OR"),
 	QUOTE ("QUOTE"),
 	CONS ("CONS"),
+
+	DEFINE ("DEFINE"),
+	LAMBDA ("LAMBDA"),
+	LET ("LET"),
+	LETSTAR ("LET*"),
+	LETREC ("LETREC"),
 	
 	CAR ("CAR"),
 	CDR ("CDR"),
@@ -67,5 +67,10 @@ public enum Keyword {
 	
 	public boolean listOp() {
 		return ordinal() >= CAR.ordinal();
+	}
+	
+	public boolean newScope() {
+		return ordinal() >= DEFINE.ordinal() &&
+			   ordinal() <= LETREC.ordinal();
 	}
 }

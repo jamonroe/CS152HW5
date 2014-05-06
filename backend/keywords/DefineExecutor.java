@@ -2,18 +2,23 @@ package backend.keywords;
 
 import backend.Executor;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class DefineExecutor extends Executor {
 
-	public DefineExecutor(SymbolTable symtab) {
-		super(symtab);
+	public DefineExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {
 		Node variable = node.getLeftChild();
-		Object value = super.execute(node.getRightChild());
-		symtab.put(variable.getTokenValue().toString(), value);
+		
+		// Add function info into symbol table
+		symtabs.peek().put(variable.getTokenValue().toString(), node.getRightChild().getLeftChild());
+		
+		runtime.add(variable.getTokenValue().toString(), super.execute(node.getRightChild()));
+		
 		return null;
 	}
 }

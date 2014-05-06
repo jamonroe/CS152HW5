@@ -1,3 +1,5 @@
+import intermediate.RuntimeStack;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,18 +10,15 @@ import frontend.Parser;
 import frontend.Scanner;
 import frontend.Source;
 
-import frontend.token.Predefined;
-
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
             
-        String src = "cond.lisp";
+        String src = "lambda.lisp";
         Source source = new Source(new FileInputStream(new File(src)));
         Scanner scan = new Scanner(source);	
         Parser parser = new Parser(scan);
-        
-        Executor exe = new Executor(parser.getTable());
+        Executor exe = new Executor(parser.getStack(), new RuntimeStack());
 
         System.out.println("**** Parser Results ****\n");
         while (parser.parse() != null) {

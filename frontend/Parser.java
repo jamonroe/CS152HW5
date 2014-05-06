@@ -1,10 +1,13 @@
 package frontend;
 
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.SymTab;
+import intermediate.SymTabStack;
 import frontend.token.SpecialSymbol;
 import static frontend.token.SpecialSymbol.LPAREN;
 import static frontend.token.SpecialSymbol.RPAREN;
+import frontend.token.Keyword;
+import frontend.token.Predefined;
 import frontend.token.SpecialToken;
 import frontend.token.Token;
 import frontend.token.TokenType;
@@ -13,7 +16,8 @@ import java.io.IOException;
 
 public class Parser {
 
-	SymbolTable symtab;
+	SymTabStack symtabs;
+	SymTab global;
 	String src;
     Scanner scan;
     Node head;
@@ -22,7 +26,9 @@ public class Parser {
 
     public Parser(Scanner scan) throws IOException {
         this.scan = scan;
-        symtab = new SymbolTable().initPredefined();
+        symtabs = new SymTabStack();
+        global = symtabs.push().initPredefined();
+        symtabs.push();
     }
 
     public Node parse() throws IOException {
@@ -46,6 +52,7 @@ public class Parser {
 
     private void parseList(Node root, boolean real) throws IOException {
         Token temp;
+        boolean scoped = false;
     	if((temp = scan.next()) == null) return;
         Node car = new Node(temp); 
 
@@ -60,9 +67,25 @@ public class Parser {
         currentLine += " " + temp.toString();
         
         // Add identifiers to symbol table
+        boolean pre = false;
         if (car.getToken().getType() == TokenType.Identifier){
-        	if (symtab.get(car.getTokenValue().toString()) == null)
-        		symtab.put(car.getTokenValue().toString(), null);        	
+        	if (car.getTokenValue() instanceof Predefined) {
+        		pre = true;
+        		car.connect(global);
+        	}
+        	if (symtabs.search(car.getTokenValue().toString()) == null) {
+        		symtabs.peek().put(car.getTokenValue().toString(), car); 
+        	}
+        }
+        
+        // Push new scopes
+        if (car.getToken().getType() == TokenType.Keyword &&
+        	((Keyword)car.getTokenValue()).newScope()) {
+        	scoped = true;
+        	car.connect(symtabs.push());
+        } else {
+        	if (!pre)
+        		car.connect(symtabs.peek());
         }
         
         // LEFT CHILD
@@ -94,10 +117,14 @@ public class Parser {
             }
             currentLine += " " + temp.toString();
     	}
+    	
+    	if (scoped) {
+    		System.out.println(symtabs.pop());
+    	}
     }
     
-    public SymbolTable getTable() {
-    	return symtab;
+    public SymTabStack getStack() {
+    	return symtabs;
     }
     
     public String toString() {

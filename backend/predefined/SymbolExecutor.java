@@ -3,12 +3,13 @@ package backend.predefined;
 import backend.Executor;
 import frontend.token.TokenType;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class SymbolExecutor extends Executor {
 
-	public SymbolExecutor(SymbolTable symtab) {
-		super(symtab);
+	public SymbolExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {

@@ -3,17 +3,18 @@ package backend;
 import java.util.ArrayList;
 
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class LambdaExecutor extends Executor {
 
-	public LambdaExecutor(SymbolTable symtab) {
-		super(symtab);
+	public LambdaExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
-
+	
 	public Object execute(Node node) {
 		Node passed_param = node.getRightChild();
-		Node func = (Node) symtab.get(node.getLeftChild().getTokenValue().toString());
+		Node func = (Node) symtabs.search(node.getLeftChild().getTokenValue().toString());
 		Node func_param = func.getRightChild().getLeftChild();
 		
 		ArrayList<Object> passed_parameters = new ArrayList<Object>();
@@ -28,14 +29,20 @@ public class LambdaExecutor extends Executor {
 			func_param = func_param.getRightChild();
 		}
 		
-		// TODO push new symtab
+		// Push the new scope
+		runtime.push(func.getTable().getLevel());
 		
+		// Add the parameters
 		for (int i = 0; i < func_parameters.size(); i++) {
-			symtab.put(func_parameters.get(i), passed_parameters.get(i));
+			runtime.add(func_parameters.get(i), passed_parameters.get(i));
 		}
+
+		// Execute the function
+		Object result = super.execute(func.getRightChild().getRightChild());
+
+		// Pop the scope
+		runtime.pop();
 		
-		return super.execute(func.getRightChild().getRightChild());
-		
-		// TODO pop symtab
+		return result;
 	}
 }

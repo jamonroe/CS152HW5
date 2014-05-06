@@ -2,18 +2,20 @@ package backend.predefined;
 
 import backend.Executor;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTabStack;
 
 public class AddExecutor extends Executor {
 
-	public AddExecutor(SymbolTable symtab) {
-		super(symtab);
+	public AddExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {
 		Object A = super.execute(node);
 		while (node.getRightChild() != null) {
-			A = add(A, super.execute(node.getRightChild()));
+			A = add(A, 
+					super.execute(node.getRightChild()));
 			node = node.getRightChild();
 		}
 		return A;

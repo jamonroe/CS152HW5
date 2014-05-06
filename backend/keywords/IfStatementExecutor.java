@@ -2,12 +2,14 @@ package backend.keywords;
 
 import backend.Executor;
 import intermediate.Node;
-import intermediate.SymbolTable;
+import intermediate.RuntimeStack;
+import intermediate.SymTab;
+import intermediate.SymTabStack;
 
 public class IfStatementExecutor extends Executor {
-
-	public IfStatementExecutor(SymbolTable symtab) {
-		super(symtab);
+	
+	public IfStatementExecutor(SymTabStack symtabs, RuntimeStack runtime) {
+		super(symtabs, runtime);
 	}
 
 	public Object execute(Node node) {

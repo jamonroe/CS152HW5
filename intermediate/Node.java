@@ -6,6 +6,7 @@ import frontend.token.Token;
 public class Node { // Very very basic node class.
 
         Token token;
+        SymTab symtab;
         Node lchild;
         Node rchild;
 
@@ -13,6 +14,14 @@ public class Node { // Very very basic node class.
             token = inToken;
         }
 
+        public SymTab connect(SymTab symtab) {
+        	return this.symtab = symtab;
+        }
+        
+        public SymTab getTable() {
+        	return symtab;
+        }
+        
         public Token getToken() {
             return token;
         }
