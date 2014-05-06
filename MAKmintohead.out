@@ -1,0 +1,38 @@
+
+**** Parser Results ****
+
+01: ( DEFINE sort
+02:  ( LAMBDA ( lst )
+03:  ( IF ( null? lst )
+04:  ' ( )
+05:  ( LET ( ( mth ( min-to-head lst ) ) )
+06:  ( CONS ( CAR mth ) ( sort ( CDR mth ) ) ) ) ) ) )
+
+**** Parser Results ****
+
+08: ( DEFINE min-to-head
+09:  ( LAMBDA ( lst )
+10:  ( COND
+11:  ( ( null? lst ) ' ( ) )
+12:  ( ( null? ( CDR lst ) ) lst )
+13:  ( ELSE ( LET* ( ( new-lst ( min-to-head ( CDR lst ) ) )
+14:  ( second ( CAR new-lst ) ) )
+15:  ( IF ( > ( CAR lst ) second )
+16:  ( CONS second ( CONS ( CAR lst ) ( CDR new-lst ) ) )
+17:  lst ) ) ) ) ) )
+
+**** Parser Results ****
+
+19: ( min-to-head ' ( 5 8 1 0 6 2 1 9 ) )
+
+**** Execution Results ****
+
+( 0 5 8 1 6 2 1 9 ) 
+
+**** Parser Results ****
+
+22: ( sort ' ( 5 8 1 0 6 2 1 9 ) )
+
+**** Execution Results ****
+
+( 0 1 1 2 5 6 8 9 ) 

@@ -1,0 +1,35 @@
+
+**** Parser Results ****
+
+01: ( DEFINE sandwich-first
+02:  ( LAMBDA ( a b lst )
+03:  ( COND
+04:  ( ( null? lst ) ' ( ) )
+05:  ( ( null? ( CDR lst ) ) lst )
+06:  ( ( AND ( equal? b ( CAR lst ) ) ( equal? b ( CADR lst ) ) )
+07:  ( APPEND ( LIST b a b ) ( CDDR lst ) ) )
+08:  ( ELSE ( CONS ( CAR lst ) ( sandwich-first a b ( CDR lst ) ) ) ) ) ) )
+
+**** Parser Results ****
+
+10: ( sandwich-first ' meat ' bread ' ( bread bread ) )
+
+**** Execution Results ****
+
+( bread meat bread ) 
+
+**** Parser Results ****
+
+11: ( sandwich-first ' meat ' bread ' ( ) )
+
+**** Execution Results ****
+
+( ) 
+
+**** Parser Results ****
+
+12: ( sandwich-first ' meat ' bread ' ( meat meat ) )
+
+**** Execution Results ****
+
+( meat meat ) 

@@ -1,0 +1,152 @@
+
+**** Parser Results ****
+
+01: ( DEFINE same-structure?
+02:  ( LAMBDA ( x y )
+03:  ( COND
+04:  ( ( AND ( null? x ) ( null? y ) ) #t )
+05:  ( ( null? x ) #f )
+06:  ( ( null? y ) #f )
+07:  ( ( AND ( pair? ( CAR x ) ) ( pair? ( CAR y ) ) )
+08:  ( AND ( same-structure? ( CAR x ) ( CAR y ) )
+09:  ( same-structure? ( CDR x ) ( CDR y ) ) ) )
+10:  ( ELSE ( AND ( same-type? ( CAR x ) ( CAR y ) )
+11:  ( same-structure? ( CDR x ) ( CDR y ) ) ) ) ) ) )
+
+**** Parser Results ****
+
+13: ( DEFINE same-type?
+14:  ( LAMBDA ( x y )
+15:  ( OR ( AND ( symbol? x ) ( symbol? y ) )
+16:  ( AND ( integer? x ) ( integer? y ) )
+17:  ( AND ( float? x ) ( float? y ) )
+18:  ( AND ( boolean? x ) ( boolean? y ) )
+19:  ( AND ( char? x ) ( char? y ) )
+20:  ( AND ( string? x ) ( string? y ) ) ) ) )
+
+**** Parser Results ****
+
+22: ( DEFINE float?
+23:  ( LAMBDA ( x )
+24:  ( AND ( real? x )
+25:  ( NOT ( integer? x ) ) ) ) )
+
+**** Parser Results ****
+
+27: ( same-structure? ' ( 1 1 ) ' ( 2 ) )
+
+**** Execution Results ****
+
+false
+
+**** Parser Results ****
+
+29: ( same-structure? ' ( 1 ) ' ( a ) )
+
+**** Execution Results ****
+
+false
+
+**** Parser Results ****
+
+31: ( same-structure? ' ( 1 a ) ' ( 2 b ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+33: ( same-structure? ' ( ( ) ) ' ( ( ) ) )
+
+**** Execution Results ****
+
+false
+
+**** Parser Results ****
+
+35: ( same-structure? ' ( 1 ) ' ( 2 ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+37: ( same-structure? ' ( 1 1 ) ' ( 2 2 ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+39: ( same-structure? ' ( ( 1 ) 1 ) ' ( ( 2 ) 2 ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+41: ( same-structure? ' ( 1 ( 1 ) ) ' ( 2 ( 2 ) ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+43: ( same-structure? ' ( 1 ( 1 ( 1 ) ) ) ' ( 2 ( 2 ( 2 ) ) ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+45: ( same-structure? ' ( 1 ( 1 ( 1 1 ) ( ( 1 ) ) ) ) ' ( 2 ( 2 ( 2 2 ) ( ( 2 ) ) ) ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+47: ( same-structure? ' ( 1 ( a ( b 3.14 ) ( ( c ) ) ) ) ' ( 3 ( z ( x 1.23 ) ( ( q ) ) ) ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+49: ( same-structure? ' ( 1 ( a ( b 3.14 ) ( ( c ) ) ) ) ' ( 3 ( z ( x 3 ) ( ( q ) ) ) ) )
+
+**** Execution Results ****
+
+false
+
+**** Parser Results ****
+
+51: ( same-structure? ' ( 1 2 3 4 5 ) ' ( 5 4 3 2 ) )
+
+**** Execution Results ****
+
+false
+
+**** Parser Results ****
+
+53: ( same-structure? ' ( ) ' ( ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+55: ( same-structure? ' ( ( "hello" ) "world" ) ' ( ( "good-bye" ) "sam" ) )
+
+**** Execution Results ****
+
+true

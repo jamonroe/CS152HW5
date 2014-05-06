@@ -1,0 +1,26 @@
+
+**** Parser Results ****
+
+01: ( DEFINE member?
+02:  ( LAMBDA ( item lst )
+03:  ( COND
+04:  ( ( null? lst ) #f )
+05:  ( ( equal? item ( CAR lst ) ) #t )
+06:  ( ELSE ( member? item ( CDR lst ) ) )
+07:  ) ) )
+
+**** Parser Results ****
+
+09: ( member? 3 ' ( 1 2 3 ) )
+
+**** Execution Results ****
+
+true
+
+**** Parser Results ****
+
+10: ( member? ' b ' ( a ( b c ) d ) )
+
+**** Execution Results ****
+
+false

@@ -1,0 +1,36 @@
+
+**** Parser Results ****
+
+01: ( DEFINE member?
+02:  ( LAMBDA ( item lst )
+03:  ( COND
+04:  ( ( null? lst ) #f )
+05:  ( ( equal? item ( CAR lst ) ) #t )
+06:  ( ELSE ( member? item ( CDR lst ) ) )
+07:  ) ) )
+
+**** Parser Results ****
+
+09: ( DEFINE remove-last
+10:  ( LAMBDA ( item lst )
+11:  ( COND
+12:  ( ( null? lst ) ' ( ) )
+13:  ( ( AND ( equal? item ( CAR lst ) ) ( NOT ( member? item ( CDR lst ) ) ) ) ( CDR lst ) )
+14:  ( ELSE ( CONS ( CAR lst ) ( remove-last item ( CDR lst ) ) ) ) )
+15:  ) )
+
+**** Parser Results ****
+
+17: ( remove-last ' a ' ( b a n a n a s ) )
+
+**** Execution Results ****
+
+( b a n a n s ) 
+
+**** Parser Results ****
+
+18: ( remove-last ' ( a b ) ' ( a b ( a b ) a b ( b a ) a b ( a b ) a b ) )
+
+**** Execution Results ****
+
+( a b ( a b ) a b ( b a ) a b a b ) 
